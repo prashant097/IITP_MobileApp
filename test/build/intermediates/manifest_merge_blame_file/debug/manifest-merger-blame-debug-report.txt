@@ -1,0 +1,95 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.mytestapp"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="30" />
+10
+11    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+11-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\debug\AndroidManifest.xml:5:5-77
+11-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\debug\AndroidManifest.xml:5:22-75
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:4:5-67
+12-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:4:22-64
+13    <uses-permission android:name="android.permission.VIBRATE" />
+13-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:5:5-66
+13-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:5:22-63
+14    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+14-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:6:5-80
+14-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:6:22-78
+15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+15-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:7:5-80
+15-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:7:22-77
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:8:5-81
+16-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:8:22-78
+17    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+17-->[com.facebook.flipper:flipper:0.93.0] C:\Users\DREPAS\.gradle\caches\transforms-3\56e50fdcee678611e65b015557bf88ff\transformed\jetified-flipper-0.93.0\AndroidManifest.xml:16:5-76
+17-->[com.facebook.flipper:flipper:0.93.0] C:\Users\DREPAS\.gradle\caches\transforms-3\56e50fdcee678611e65b015557bf88ff\transformed\jetified-flipper-0.93.0\AndroidManifest.xml:16:22-73
+18
+19    <application
+19-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:10:5-43:19
+20        android:name="com.mytestapp.MainApplication"
+20-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:11:7-38
+21        android:allowBackup="false"
+21-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:15:7-34
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.1.0] C:\Users\DREPAS\.gradle\caches\transforms-3\5fd453fce21d98bb86c336c9708dacfb\transformed\core-1.1.0\AndroidManifest.xml:24:18-86
+23        android:debuggable="true"
+24        android:icon="@mipmap/ic_launcher"
+24-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:13:7-41
+25        android:label="@string/app_name"
+25-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:12:7-39
+26        android:roundIcon="@mipmap/ic_launcher_round"
+26-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:14:7-52
+27        android:theme="@style/AppTheme"
+27-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:16:7-38
+28        android:usesCleartextTraffic="true" >
+28-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\debug\AndroidManifest.xml:8:9-44
+29        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+29-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:42:7-84
+29-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:42:17-81
+30        <activity
+30-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:18:7-31:18
+31            android:name="com.mytestapp.MainActivity"
+31-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:19:9-37
+32            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+32-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:21:9-86
+33            android:exported="true"
+33-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:24:9-32
+34            android:label="@string/app_name"
+34-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:20:9-41
+35            android:launchMode="singleTask"
+35-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:22:9-40
+36            android:windowSoftInputMode="adjustResize" >
+36-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:23:9-51
+37            <intent-filter>
+37-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:26:9-30:25
+38                <action android:name="android.intent.action.MAIN" />
+38-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:27:13-65
+38-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:27:21-62
+39
+40                <category android:name="android.intent.category.LAUNCHER" />
+40-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:28:13-73
+40-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:28:23-70
+41
+42                <action android:name="android.intent.action.DOWNLOAD_COMPLETE" />
+42-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:29:13-77
+42-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:29:21-75
+43            </intent-filter>
+44        </activity> <!-- Code for Splash screen starts here -->
+45        <activity
+45-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:34:7-39:18
+46            android:name="com.mytestapp.SplashActivity"
+46-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:35:9-39
+47            android:label="@string/app_name"
+47-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:37:9-41
+48            android:theme="@style/SplashTheme" >
+48-->C:\Users\DREPAS\Documents\GitHub\IITP_MobileApp\test\MyTestApp_debug\android\app\src\main\AndroidManifest.xml:36:9-43
+49        </activity>
+50    </application>
+51
+52</manifest>
