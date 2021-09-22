@@ -9,6 +9,7 @@ import { plusPrint, app_info, app_Name, dirHome } from "./config";
 import AsyncStorage from "@react-native-community/async-storage";
 
 LogBox.ignoreAllLogs();
+
 const initialState = {
     data: "",
     userData: [], loading: false,
@@ -37,152 +38,140 @@ const initialState = {
 
 
 };
-export async function GetAllPermissions() {
-    try {
-        if (Platform.OS === "android") {
-            const userResponse = await PermissionsAndroid.requestMultiple([
-                PermissionsAndroid.PERMISSIONS.CAMERA,
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
-            ]).then((result) => {
-
-                if (result['android.permission.ACCESS_FINE_LOCATION']
-                    && result['android.permission.CAMERA']
-                    && result['android.permission.ACCESS_FINE_LOCATION']
-                    && result['android.permission.ACCESS_COARSE_LOCATION']
-
-                    && result['android.permission.READ_EXTERNAL_STORAGE']
-                    && result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted') {
-
-                    plusPrint("peermission grnated");
-                    geoCapture();
-                } else if (result['android.permission.ACCESS_FINE_LOCATION']
-                    || result['android.permission.CAMERA']
-                    || result['android.permission.ACCESS_COARSE_LOCATION']
-                    || result['android.permission.READ_EXTERNAL_STORAGE']
-                    || result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'never_ask_again') {
-
-                    this.refs.toast.show('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
-                }
-            });
-            return userResponse;
-
-
-        }
-    } catch (err) {
-        plusPrint(err);
-    }
-    return null;
-}
-function geoCapture() {
-
-    console.log("curent loca press::");
-    const config = {
-        skipPermissionRequests: true,
-        authorizationLevel: 'auto'
-    };
-    Geolocation.setRNConfiguration(config);
-    console.log("CheckPoint1");
-    Geolocation.getCurrentPosition(info => console.log("infoooo::" + info));
-    let mockloc = false;
-
-    Geolocation.getCurrentPosition(
-        position => {
-            const assetPosition = JSON.stringify(position);
-            alert(assetPosition);
-            // console.log("loocc::" + assetPosition);
-            console.log("loocc::mocked" + position.mocked);
-            mockloc = position.mocked;
-            if (!mockloc) {
-                // const assetPosition =
-                //   "Latitude : " +
-                //   position.coords.latitude +
-                //   " , " +
-                //   "Longitude : " +
-                //   position.coords.longitude +
-                //   " , " +
-                //   "Accuracy : " +
-                //   position.coords.accuracy;
-                // " , " +
-                //   "Timestamp : " +
-                //   position.timestamp;
-                let accuracy = position.coords.accuracy;
-
-                if (accuracy < 10) {
-                    // this.setState({ assetPosition });
-
-                    let latitude = parseFloat(position.coords.latitude.toFixed(5));
-                    let longitude = parseFloat(position.coords.longitude.toFixed(5));
-                    var date = new Date(parseInt(position.timestamp, 10));
-                    var ds = date.toString('dd-MM-yyyy HH:mm:ss');
-                    const dateee = date.toLocaleDateString() + " " + date.toLocaleTimeString()
-
-                    console.log("valuee::" + ds + "dddd::" + dateee);
-
-                    let location_details = {
-                        // latitude: this.setState({ latitude }),
-                        // longitude: this.setState({ longitude }),
-                        // accuracy: this.setState({ accuracy }),
-                        // timestamp: this.setState({ dateee })
-                    };
-                    AsyncStorage.setItem("location_details", JSON.stringify(location_details));
-                    // this.props.navigation.navigate("MapPage");
-                    // location_value = 
-                    //   <View styles = {styles.p_container}>
-                    //     <Text style = {styles.profile_Container}>Latitude : {latitude} </Text>
-                    //     <Text style = {styles.profile_Container}>Longitude : {longitude} </Text>
-                    //     <Text style = {styles.profile_Container}>Accuracy : {accuracy} </Text>
-
-                    //   </View>
-                } else {
-                    alert("Your accuracy is greather than 10m. Current Accuracy is : " + accuracy);
-                }
-            }
-
-            else {
-                alert("Mock Location is not allowed in this application. Kindly capture true location")
-            }
-        },
-        error =>
-            // console.log("Error", JSON.stringify(error.message)),
-            alert(JSON.stringify(error.message)),
-
-        { enableHighAccuracy: true, timeout: 10000 }
-    );
-    //  this.setState({ assetPosition: this.state.lastPosition });
-}
-
-class SplashScreen extends React.Component {
+export default class SplashScreen extends React.Component {
     constructor(props) {
         super(props);
 
         let imag = null;
         this.state = initialState;
 
-
-
-
-
     }
-    componentDidMount() {
+    async  GetAllPermissions() {
+        try {
+            if (Platform.OS === "android") {
+                const userResponse = await PermissionsAndroid.requestMultiple([
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+                ]).then((result) => {
+    
+                    if (result['android.permission.ACCESS_FINE_LOCATION']
+                        && result['android.permission.CAMERA']
+                        && result['android.permission.ACCESS_FINE_LOCATION']
+                        && result['android.permission.ACCESS_COARSE_LOCATION']
+    
+                        && result['android.permission.READ_EXTERNAL_STORAGE']
+                        && result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted') {
+    
+                        plusPrint("peermission grnated");
+                        geoCapture();
+                    } else if (result['android.permission.ACCESS_FINE_LOCATION']
+                        || result['android.permission.CAMERA']
+                        || result['android.permission.ACCESS_COARSE_LOCATION']
+                        || result['android.permission.READ_EXTERNAL_STORAGE']
+                        || result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'never_ask_again') {
+    
+                        this.refs.toast.show('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
+                    }
+                });
+                return userResponse;
+    
+    
+            }
+        } catch (err) {
+            plusPrint(err);
+        }
+        return null;
+    }
+    
+    
+    async componentDidMount() {
         // Start counting when the page is loaded
         GetAllPermissions();
     }
-    static navigationOptions = ({ navigation }) => {
-        const { params = {} } = navigation.state;
-    
-        return {
-    
-          gestureEnabled: false,
-          headerTintColor: 'white',
-          headerTitleStyle: styles.header_TitleStyle,
-          headerStyle: styles.header_TextColor
-        
-    
+     geoCapture() {
+
+        console.log("curent loca press::");
+        const config = {
+            skipPermissionRequests: true,
+            authorizationLevel: 'auto'
         };
-      };
+        Geolocation.setRNConfiguration(config);
+        console.log("CheckPoint1");
+        Geolocation.getCurrentPosition(info => console.log("infoooo::" + info));
+        let mockloc = false;
+
+        Geolocation.getCurrentPosition(
+            position => {
+                const assetPosition = JSON.stringify(position);
+                alert(assetPosition);
+                // console.log("loocc::" + assetPosition);
+                console.log("loocc::mocked" + position.mocked);
+                mockloc = position.mocked;
+                if (!mockloc) {
+                    // const assetPosition =
+                    //   "Latitude : " +
+                    //   position.coords.latitude +
+                    //   " , " +
+                    //   "Longitude : " +
+                    //   position.coords.longitude +
+                    //   " , " +
+                    //   "Accuracy : " +
+                    //   position.coords.accuracy;
+                    // " , " +
+                    //   "Timestamp : " +
+                    //   position.timestamp;
+                    let accuracy = position.coords.accuracy;
+
+                    if (accuracy < 10) {
+                        // this.setState({ assetPosition });
+
+                        let latitude = parseFloat(position.coords.latitude.toFixed(5));
+                        let longitude = parseFloat(position.coords.longitude.toFixed(5));
+                        var date = new Date(parseInt(position.timestamp, 10));
+                        var ds = date.toString('dd-MM-yyyy HH:mm:ss');
+                        const dateee = date.toLocaleDateString() + " " + date.toLocaleTimeString()
+
+                        console.log("valuee::" + ds + "dddd::" + dateee);
+
+                        let location_details = {
+                            // latitude: this.setState({ latitude }),
+                            // longitude: this.setState({ longitude }),
+                            // accuracy: this.setState({ accuracy }),
+                            // timestamp: this.setState({ dateee })
+                        };
+                        AsyncStorage.setItem("location_details", JSON.stringify(location_details));
+                        // this.props.navigation.navigate("MapPage");
+                        // location_value = 
+                        //   <View styles = {styles.p_container}>
+                        //     <Text style = {styles.profile_Container}>Latitude : {latitude} </Text>
+                        //     <Text style = {styles.profile_Container}>Longitude : {longitude} </Text>
+                        //     <Text style = {styles.profile_Container}>Accuracy : {accuracy} </Text>
+
+                        //   </View>
+                    } else {
+                        alert("Your accuracy is greather than 10m. Current Accuracy is : " + accuracy);
+                    }
+                }
+
+                else {
+                    alert("Mock Location is not allowed in this application. Kindly capture true location")
+                }
+            },
+            error =>
+                // console.log("Error", JSON.stringify(error.message)),
+                alert(JSON.stringify(error.message)),
+
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+        //  this.setState({ assetPosition: this.state.lastPosition });
+
+    };
+
+
+
 
     render() {
         const { navigate } = this.props.navigation;
@@ -194,6 +183,5 @@ class SplashScreen extends React.Component {
                 />
             </View >
         );
-    };
+    }
 }
-export default SplashScreen;
