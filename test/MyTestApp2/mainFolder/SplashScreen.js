@@ -6,7 +6,7 @@ import { LogBox } from 'react-native';
 import styles from "./styles/styles";
 
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
-// import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-community/async-storage";
 
 LogBox.ignoreAllLogs();
 const initialState = {
@@ -111,7 +111,7 @@ function geoCapture() {
                 let accuracy = position.coords.accuracy;
 
                 if (accuracy < 10) {
-                    this.setState({ assetPosition });
+                    // this.setState({ assetPosition });
 
                     let latitude = parseFloat(position.coords.latitude.toFixed(5));
                     let longitude = parseFloat(position.coords.longitude.toFixed(5));
@@ -122,13 +122,13 @@ function geoCapture() {
                     console.log("valuee::" + ds + "dddd::" + dateee);
 
                     let location_details = {
-                        latitude: this.setState({ latitude }),
-                        longitude: this.setState({ longitude }),
-                        accuracy: this.setState({ accuracy }),
-                        timestamp: this.setState({ dateee })
+                        // latitude: this.setState({ latitude }),
+                        // longitude: this.setState({ longitude }),
+                        // accuracy: this.setState({ accuracy }),
+                        // timestamp: this.setState({ dateee })
                     };
                     AsyncStorage.setItem("location_details", JSON.stringify(location_details));
-                    this.props.navigation.navigate("MapPage");
+                    // this.props.navigation.navigate("MapPage");
                     // location_value = 
                     //   <View styles = {styles.p_container}>
                     //     <Text style = {styles.profile_Container}>Latitude : {latitude} </Text>
@@ -170,9 +170,22 @@ class SplashScreen extends React.Component {
         // Start counting when the page is loaded
         GetAllPermissions();
     }
-
+    static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+    
+        return {
+    
+          gestureEnabled: false,
+          headerTintColor: 'white',
+          headerTitleStyle: styles.header_TitleStyle,
+          headerStyle: styles.header_TextColor
+        
+    
+        };
+      };
 
     render() {
+        const { navigate } = this.props.navigation;
 
         return (
             <View>
@@ -183,5 +196,4 @@ class SplashScreen extends React.Component {
         );
     };
 }
-
-export { SplashScreen as default, geoCapture };
+export default SplashScreen;
