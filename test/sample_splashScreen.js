@@ -3,7 +3,7 @@ import { View, PermissionsAndroid, Alert, Text, ActivityIndicator } from "react-
 import { Image } from "react-native-elements";
 
 import { LogBox } from 'react-native';
-import { plusPrint, app_info, app_Name, dirHome, versionCheck_url } from "./config";
+import { plusPrint, app_info, app_Name, dirHome} from "./config";
 
 
 LogBox.ignoreAllLogs();
@@ -25,66 +25,10 @@ export async function GetAllPermissions() {
   return null;
 }
 
-export default class App extends React.Component {
-  constructor(props) {
-		super(props);
-
-		this.state = {
-		  loading: false, progress: 0
-		};
-	}
-	
-    _setValue = async () => {
-    this.setState({ loading: false })
-
-    try {
-      let user = await AsyncStorage.getItem("userdetails");
-      console.log("userinfo::from splash:" + user);
-      if (user != null && user != "") {
-        let parsed = JSON.parse(user);
-        // alert(parsed.userdetailscaptured);
-        if (parsed.userdetailscaptured=true) {
-          // console.log("parsed::"+parsed.userdetailscaptured);
-          this.props.navigation.navigate("MainActivity");
-
-          // this.setState({ component: <MainActivity /> });
-        } else {
-          // console.log("parsed else::"+parsed.userdetailscaptured);
-
-          this.props.navigation.navigate("LoginPage");
-
-          // this.setState({ component: <LoginPage /> });
-        }
-      } else {
-        this.props.navigation.navigate("LoginPage");
-
-        // this.setState({ component: <LoginPage /> });
-      }
-    } catch (error) { // log the error
-    }
-  };
 
 async componentDidMount() {
    // Start counting when the page is loaded
    GetAllPermissions();
-   RNFS.mkdir(dirHome)
-      .then(() => {
-
-        plusPrint("Folder created ");
-        // resolve(true);
-        })
-      .catch(err => {
-        plusPrint("mkdir error", err);
-        reject(err);
-        });
-      
-    this.timeoutHandle = setTimeout(() => {
-      this.versionCheck();
-
-      // Add your logic for the transition
-      // this.setState({ component: <HomeScreen /> });
-    }, 5000);
-
   }
 
 
@@ -95,7 +39,7 @@ render() {
         <Image source={require('C:/sw/App/genApp/src/images/splash.jpg')}
          style={styles.splashcontainer}
         />
-        <RemotePushController/>
+        //<RemotePushController/>
        </View >
     );
 }
