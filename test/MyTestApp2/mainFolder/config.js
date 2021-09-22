@@ -25,5 +25,5 @@ export const appversionname = app_info.app_Name + "1dot";
 //   });
 
 export const plusPrint = (n) => {
-    // console.log("print valueis::" + n);
+    console.log("print valueis::" + n);
   }

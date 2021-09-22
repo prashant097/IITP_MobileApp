@@ -38,6 +38,35 @@ import { renderNode } from 'react-native-elements/dist/helpers';
 //     plusPrint("loc::" + parsed_location);
 // }
 
+const initialState = {
+    data: "",
+    userData: [], loading: false,
+
+    appname: "",
+    captured_form_data: "",
+    initialPosition: "unknown",
+    latitude: "",
+    longitude: "",
+    accuracy: "",
+    mapState: "",
+    parsed_location: "",
+    assetPosition: null,
+    lastPosition: "unknown",
+    photo1_loc: "unknown",
+    photo2_loc: "unknown",
+    visible: true,
+    formData: [],
+    username: null,
+    usermobile: null,
+    // ImageSource1: null,
+    // ImageSource2: null,
+    // image1_data: null,
+    // image2_data: null,
+    footer_text: "",
+    visible: true
+
+
+};
 class MapPage extends React.Component {
 
     constructor(props) {
@@ -48,12 +77,13 @@ class MapPage extends React.Component {
     }
     getLocation = async () => {
         const location_update = await AsyncStorage.getItem("location_details");
-        let parsed_location = JSON.parse(location_update);
-        plusPrint("loc::" + parsed_location);
+        const value=JSON.parse(location_update);
+        this.setState({ parsed_location: JSON.parse(location_update) });
+        plusPrint("loc::in map page" + this.state.parsed_location+"value::"+value.latitude);
     }
     componentDidMount() {
         // Start counting when the page is loaded\
-        getLocation();
+        this.getLocation();
 
 
 
@@ -69,8 +99,8 @@ class MapPage extends React.Component {
                     // onPress={getLocation}
                     />
                 </View>
-                <Text>Latitude: {parsed_location.latitude} </Text>
-                <Text>Longitude: {parsed_location.longitude} </Text>
+                {/* <Text>Latitude: {parsed_location.latitude} </Text>
+                <Text>Longitude: {parsed_location.longitude} </Text> */}
                 <View
                     style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
                     <Button

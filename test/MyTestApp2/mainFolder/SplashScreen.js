@@ -46,7 +46,7 @@ export default class SplashScreen extends React.Component {
         this.state = initialState;
 
     }
-    async  GetAllPermissions() {
+    async GetAllPermissions() {
         try {
             if (Platform.OS === "android") {
                 const userResponse = await PermissionsAndroid.requestMultiple([
@@ -56,42 +56,42 @@ export default class SplashScreen extends React.Component {
                     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
                     PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
                 ]).then((result) => {
-    
+
                     if (result['android.permission.ACCESS_FINE_LOCATION']
                         && result['android.permission.CAMERA']
                         && result['android.permission.ACCESS_FINE_LOCATION']
                         && result['android.permission.ACCESS_COARSE_LOCATION']
-    
+
                         && result['android.permission.READ_EXTERNAL_STORAGE']
                         && result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted') {
-    
+
                         plusPrint("peermission grnated");
-                        geoCapture();
+                        this.geoCapture();
                     } else if (result['android.permission.ACCESS_FINE_LOCATION']
                         || result['android.permission.CAMERA']
                         || result['android.permission.ACCESS_COARSE_LOCATION']
                         || result['android.permission.READ_EXTERNAL_STORAGE']
                         || result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'never_ask_again') {
-    
+
                         this.refs.toast.show('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
                     }
                 });
                 return userResponse;
-    
-    
+
+
             }
         } catch (err) {
             plusPrint(err);
         }
         return null;
     }
-    
-    
+
+
     async componentDidMount() {
         // Start counting when the page is loaded
-        GetAllPermissions();
+        this.GetAllPermissions();
     }
-     geoCapture() {
+    geoCapture() {
 
         console.log("curent loca press::");
         const config = {
@@ -106,7 +106,7 @@ export default class SplashScreen extends React.Component {
         Geolocation.getCurrentPosition(
             position => {
                 const assetPosition = JSON.stringify(position);
-                alert(assetPosition);
+                // alert(assetPosition);
                 // console.log("loocc::" + assetPosition);
                 console.log("loocc::mocked" + position.mocked);
                 mockloc = position.mocked;
@@ -126,7 +126,7 @@ export default class SplashScreen extends React.Component {
                     let accuracy = position.coords.accuracy;
 
                     if (accuracy < 10) {
-                        // this.setState({ assetPosition });
+                        this.setState({ assetPosition });
 
                         let latitude = parseFloat(position.coords.latitude.toFixed(5));
                         let longitude = parseFloat(position.coords.longitude.toFixed(5));
@@ -137,13 +137,14 @@ export default class SplashScreen extends React.Component {
                         console.log("valuee::" + ds + "dddd::" + dateee);
 
                         let location_details = {
-                            // latitude: this.setState({ latitude }),
-                            // longitude: this.setState({ longitude }),
-                            // accuracy: this.setState({ accuracy }),
-                            // timestamp: this.setState({ dateee })
+                            latitude: this.setState({ latitude }),
+                            longitude: this.setState({ longitude }),
+                            accuracy: this.setState({ accuracy }),
+                            timestamp: this.setState({ dateee })
                         };
                         AsyncStorage.setItem("location_details", JSON.stringify(location_details));
-                        // this.props.navigation.navigate("MapPage");
+                        plusPrint("get item::" + AsyncStorage.getItem("location_details"));
+                        this.props.navigation.navigate("MapPage");
                         // location_value = 
                         //   <View styles = {styles.p_container}>
                         //     <Text style = {styles.profile_Container}>Latitude : {latitude} </Text>
