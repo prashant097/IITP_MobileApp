@@ -125,7 +125,7 @@ export default class SplashScreen extends React.Component {
                     //   position.timestamp;
                     let accuracy = position.coords.accuracy;
 
-                    if (accuracy < 10) {
+                    if (accuracy < 20) {
                         this.setState({ assetPosition });
 
                         let latitude = parseFloat(position.coords.latitude.toFixed(5));
