@@ -78,6 +78,7 @@ class MapPage extends React.Component {
     getLocation = async () => {
         const location_update = await AsyncStorage.getItem("location_details");
         const value=JSON.parse(location_update);
+        console.log("Parsed Value: "+location_update);
         this.setState({ parsed_location: JSON.parse(location_update) });
         plusPrint("loc::in map page" + this.state.parsed_location+"value::"+value.latitude);
     }

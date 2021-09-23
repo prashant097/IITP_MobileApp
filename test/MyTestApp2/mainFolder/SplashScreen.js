@@ -142,8 +142,12 @@ export default class SplashScreen extends React.Component {
                             accuracy: this.setState({ accuracy }),
                             timestamp: this.setState({ dateee })
                         };
+                        plusPrint("get item: loc:" + JSON.stringify(location_details));
+
                         AsyncStorage.setItem("location_details", JSON.stringify(location_details));
                         plusPrint("get item::" + AsyncStorage.getItem("location_details"));
+                        // const check_string =  JSON.parse(AsyncStorage.getItem("location_details"));
+                        // console.log("Sent_item :: "+check_string);   
                         this.props.navigation.navigate("MapPage");
                         // location_value = 
                         //   <View styles = {styles.p_container}>
