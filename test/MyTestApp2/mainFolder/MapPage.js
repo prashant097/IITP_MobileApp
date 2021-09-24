@@ -1,42 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, Button, Linking } from 'react-native';
-// import RNLocation from 'react-native-location';
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
 import AsyncStorage from "@react-native-community/async-storage";
-import { renderNode } from 'react-native-elements/dist/helpers';
-
-// RNLocation.configure({
-//   distanceFilter: null,
-// })
-
-
-// const MapPage = ({url}) => {
-
-//   [viewLocation, isViewLocation] = useState([])
-
-//   const [tweet, setTweet] = useState([viewLocation.longitude, viewLocation.latitude]);
-
-//   const tweetLocation = () => {
-//      let twitterParams = [];
-
-//      try {
-//       if (tweet)
-//       twitterParams.push('text=' + encodeURI(tweet));
-
-//       const url = 'https://twitter.com/intent/tweet?' + twitterParams.join('&');
-
-//       Linking.openURL(url)
-//      } catch (error) {
-//                         alert('Something went wrong');
-//                     } 
-//     }    
-
-// const getLocation = async () => {
-
-//     let location_update = await AsyncStorage.getItem("location_details");
-//     let parsed_location = JSON.parse(location_update);
-//     plusPrint("loc::" + parsed_location);
-// }
+// import { renderNode } from 'react-native-elements/dist/helpers';
+import MapView, {UrlTile} from 'react-native-maps';
+// import WebViewLeaflet from 'react-native-webview-leaflet';
 
 const initialState = {
     data: "",
@@ -81,35 +49,63 @@ class MapPage extends React.Component {
         console.log("Parsed Value: "+location_update);
         this.setState({ parsed_location: JSON.parse(location_update) });
         plusPrint("loc::in map page" + this.state.parsed_location+"value::"+value.latitude);
+        this.setState({latitude:value.latitude});
+        this.setState({longitude:value.longitude});
     }
     componentDidMount() {
         // Start counting when the page is loaded\
         this.getLocation();
-
-
-
     }
 
     render() {
+        
         return (
-            <View style={styles.container} >
-                <Text>React Native Geolocation</Text>
-                <View
-                    style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-                    <Button title="Get Location"
-                    // onPress={getLocation}
-                    />
-                </View>
-                {/* <Text>Latitude: {parsed_location.latitude} </Text>
-                <Text>Longitude: {parsed_location.longitude} </Text> */}
-                <View
-                    style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-                    <Button
-                        title="Send Location"
-                    //   onPress={tweetLocation}
-                    />
-                </View>
-            </View>
+            // <View style={styles.container} >
+            //     <Text>React Native Geolocation</Text>
+            //     <View
+            //         style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
+            //         <Button title="Get Location"
+            //         // onPress={this.getLocation()}
+            //         />
+            //     </View>
+            //     <Text>Latitude: {this.state.latitude} </Text>
+            //     <Text>Longitude: {this.state.longitude} </Text>
+            // </View>
+
+            // <MapView
+            // initialRegion={{
+            //   latitude: 37.78825,
+            //   longitude: -122.4324,
+            //   latitudeDelta: 0.0922,
+            //   longitudeDelta: 0.0421,
+            // }}
+            // />
+
+
+
+            <MapView
+  region={this.state.region}
+  onRegionChange={this.onRegionChange}
+>
+  <UrlTile
+    /**
+     * The url template of the tile server. The patterns {x} {y} {z} will be replaced at runtime
+     * For example, http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
+     */
+    urlTemplate={this.state.urlTemplate}
+    /**
+     * The maximum zoom level for this tile overlay. Corresponds to the maximumZ setting in
+     * MKTileOverlay. iOS only.
+     */
+    maximumZ={19}
+    /**
+     * flipY allows tiles with inverted y coordinates (origin at bottom left of map)
+     * to be used. Its default value is false.
+     */
+    flipY={false}
+  />
+</MapView>
+            
         );
     };
 }

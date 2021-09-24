@@ -125,7 +125,7 @@ export default class SplashScreen extends React.Component {
                     //   position.timestamp;
                     let accuracy = position.coords.accuracy;
 
-                    if (accuracy < 20) {
+                    if (accuracy < 1000) {
                         this.setState({ assetPosition });
 
                         let latitude = parseFloat(position.coords.latitude.toFixed(5));
@@ -137,10 +137,10 @@ export default class SplashScreen extends React.Component {
                         console.log("valuee::" + ds + "dddd::" + dateee);
 
                         let location_details = {
-                            latitude: this.setState({ latitude }),
-                            longitude: this.setState({ longitude }),
-                            accuracy: this.setState({ accuracy }),
-                            timestamp: this.setState({ dateee })
+                            latitude: latitude ,
+                            longitude: longitude ,
+                            accuracy: accuracy ,
+                            timestamp: dateee 
                         };
                         plusPrint("get item: loc:" + JSON.stringify(location_details));
 
@@ -148,7 +148,7 @@ export default class SplashScreen extends React.Component {
                         plusPrint("get item::" + AsyncStorage.getItem("location_details"));
                         // const check_string =  JSON.parse(AsyncStorage.getItem("location_details"));
                         // console.log("Sent_item :: "+check_string);   
-                        this.props.navigation.navigate("MapPage");
+                        this.props.navigation.navigate("CustomTiles");
                         // location_value = 
                         //   <View styles = {styles.p_container}>
                         //     <Text style = {styles.profile_Container}>Latitude : {latitude} </Text>
