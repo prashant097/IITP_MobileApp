@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, useState} from 'react';
 import { StyleSheet, View, Text, Button, Linking } from 'react-native';
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
 import AsyncStorage from "@react-native-community/async-storage";
 // import { renderNode } from 'react-native-elements/dist/helpers';
-import MapView, {UrlTile} from 'react-native-maps';
+import MapView, {UrlTile, Marker} from 'react-native-maps';
 // import WebViewLeaflet from 'react-native-webview-leaflet';
 
 const initialState = {
     data: "",
     userData: [], loading: false,
-
     appname: "",
     captured_form_data: "",
     initialPosition: "unknown",
@@ -31,10 +30,10 @@ const initialState = {
     // image1_data: null,
     // image2_data: null,
     footer_text: "",
-    visible: true
-
-
+    visible: true,
 };
+
+
 class MapPage extends React.Component {
 
     constructor(props) {
@@ -52,6 +51,15 @@ class MapPage extends React.Component {
         this.setState({latitude:value.latitude});
         this.setState({longitude:value.longitude});
     }
+
+    const urlTemplate = urlTemplate ="https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py/1.0.0/bhuvan_900913/{z}/{x}/{y}.png";
+
+    // const [region, setRegion] = useState({
+    //     latitude: 51.5079145,
+    //     longitude: -0.0899163,
+    //     latitudeDelta: 0.01,
+    //     longitudeDelta: 0.01
+    // });
     componentDidMount() {
         // Start counting when the page is loaded\
         this.getLocation();
@@ -73,42 +81,61 @@ class MapPage extends React.Component {
             // </View>
 
             // <MapView
-            // initialRegion={{
-            //   latitude: 37.78825,
-            //   longitude: -122.4324,
-            //   latitudeDelta: 0.0922,
-            //   longitudeDelta: 0.0421,
-            // }}
+            // style={{ flex: 1 }}
+            // region={region}
+            // onRegionChangeComplete={region => setRegion(region)}
             // />
 
-
-
             <MapView
-  region={this.state.region}
-  onRegionChange={this.onRegionChange}
->
-  <UrlTile
-    /**
-     * The url template of the tile server. The patterns {x} {y} {z} will be replaced at runtime
-     * For example, http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
-     */
-    urlTemplate={this.state.urlTemplate}
-    /**
-     * The maximum zoom level for this tile overlay. Corresponds to the maximumZ setting in
-     * MKTileOverlay. iOS only.
-     */
-    maximumZ={19}
-    /**
-     * flipY allows tiles with inverted y coordinates (origin at bottom left of map)
-     * to be used. Its default value is false.
-     */
-    flipY={false}
-  />
-</MapView>
-            
+            style={{ flex: 1 }}
+            initialRegion={{
+              latitude: 17.40678,
+              longitude: 78.55045,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005
+            }} >
+             <Marker coordinate={{ latitude: 17.40678, longitude: 78.55045 }}
+              pinColor="red" >
+               {/* <CustomMarker />  */}
+             </Marker>
+
+             <UrlTile
+                /**
+                * The url template of the tile server. The patterns {x} {y} {z} will be replaced at runtime
+                * For example, http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
+                */
+                urlTemplate={this.state.urlTemplate}
+                /**
+                 * The maximum zoom level for this tile overlay. Corresponds to the maximumZ setting in
+                 * MKTileOverlay. iOS only.
+                 */
+                maximumZ={19}
+                /**
+                 * flipY allows tiles with inverted y coordinates (origin at bottom left of map)
+                 * to be used. Its default value is false.
+                 */
+                flipY={false}
+             />
+            </MapView>  
+
         );
     };
 }
+
+// const CustomMarker = () => (
+//     <View
+//       style={{
+//         paddingVertical: 10,
+//         paddingHorizontal: 30,
+//         backgroundColor: "#007bff",
+//         borderColor: "#eee",
+//         borderRadius: 5,
+//         elevation: 10
+//       }}
+//     >
+//       <Text style={{ color: "#fff" }}>Berlin</Text>
+//     </View>
+//   );
 
 const styles = StyleSheet.create({
     container: {
