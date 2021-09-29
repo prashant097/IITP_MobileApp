@@ -119,12 +119,12 @@ class MapPage extends React.Component {
             <MapView
             style={{ flex: 1 }}
             initialRegion={{
-              latitude: this.state.latitude,
-              longitude: this.state.longitude,
+              latitude: Number(this.state.latitude),
+              longitude: Number(this.state.longitude),
               latitudeDelta: 0.005,
               longitudeDelta: 0.005
             }} >
-             <Marker coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude}}
+             <Marker coordinate={{ latitude: Number(this.state.latitude), longitude: Number(this.state.longitude)}}
               pinColor="red" >
                {/* <CustomMarker />  */}
              </Marker>
