@@ -2,9 +2,7 @@ import React, { Component, useState} from 'react';
 import { StyleSheet, View, Text, Button, Linking, BackHandler } from 'react-native';
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
 import AsyncStorage from "@react-native-community/async-storage";
-// import { renderNode } from 'react-native-elements/dist/helpers';
 import MapView, {UrlTile, Marker} from 'react-native-maps';
-// import WebViewLeaflet from 'react-native-webview-leaflet';
 import styles from "./styles/styles";
 
 const initialState = {
@@ -51,7 +49,7 @@ class MapPage extends React.Component {
 
         let imag = null;
         this.state = initialState;
-        this.state.urlTemplate ="https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py/1.0.0/bhuvan_900913/{z}/{x}/{y}.png";
+        // this.state.urlTemplate ="https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py/1.0.0/bhuvan_900913/{z}/{x}/{y}.png";
     }
 
     handleBackButton = () => {
@@ -68,8 +66,7 @@ class MapPage extends React.Component {
           ]
         );    
     
-        return true;
-      
+        return true;   
     };
 
     getLocation = async () => {
@@ -82,14 +79,6 @@ class MapPage extends React.Component {
         this.setState({longitude:value.longitude});
     }
 
-    // const urlTemplate ="https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py/1.0.0/bhuvan_900913/{z}/{x}/{y}.png";
-
-    // const [region, setRegion] = useState({
-    //     latitude: 51.5079145,
-    //     longitude: -0.0899163,
-    //     latitudeDelta: 0.01,
-    //     longitudeDelta: 0.01
-    // });
     componentDidMount() {
         // Start counting when the page is loaded\
         this.getLocation();
@@ -129,23 +118,6 @@ class MapPage extends React.Component {
                {/* <CustomMarker />  */}
              </Marker>
 
-             <UrlTile
-                /**
-                * The url template of the tile server. The patterns {x} {y} {z} will be replaced at runtime
-                * For example, http://c.tile.openstreetmap.org/{z}/{x}/{y}.png
-                */
-                urlTemplate={this.state.urlTemplate}
-                /**
-                 * The maximum zoom level for this tile overlay. Corresponds to the maximumZ setting in
-                 * MKTileOverlay. iOS only.
-                 */
-                maximumZ={19}
-                /**
-                 * flipY allows tiles with inverted y coordinates (origin at bottom left of map)
-                 * to be used. Its default value is false.
-                 */
-                flipY={false}
-             />
             </MapView>  
 
         );

@@ -3,13 +3,12 @@ import { createStackNavigator } from "react-navigation-stack";
 
 import SplashScreen from "./SplashScreen";
 // import MapPage from "./MapPage";
-// import MapPage3 from "./MapPage3";
+import MapPage4 from "./MapPage4";
 import CustomTiles from "./CustomTiles";
 
 // 
 const MainNavigator = createStackNavigator({
     // appcheck: { screen: appcheck, name: "appcheck" },
-    // MapPage3: { screen: MapPage3, name: "MapPage3" },
 
   SplashScreen: {
       screen: SplashScreen, navigationOptions: {
@@ -18,6 +17,7 @@ const MainNavigator = createStackNavigator({
   },
 
   // MapPage: { screen: MapPage, name: "MapPage" },
+  MapPage4: { screen: MapPage4, name: "MapPage4" },
   // CustomTiles: { screen: CustomTiles, name: "CustomTiles" },
 });
 

@@ -15,8 +15,8 @@ import {
   MapShapeType
 } from "react-native-webview-leaflet";
 import lodashSample from "lodash.sample";
-import * as Location from "expo-location";
-import * as Permissions from "expo-permissions";
+// import * as Location from "expo-location";
+// import * as Permissions from "expo-permissions";
 
 // type LatLngObject = { lat: number; lng: number };
 // const locations: { icon: string; position: LatLng; name: string }[] = [
