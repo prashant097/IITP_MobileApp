@@ -35,9 +35,8 @@ const initialState = {
     // image2_data: null,
     footer_text: "",
     visible: true
-
-
 };
+
 export default class SplashScreen extends React.Component {
     constructor(props) {
         super(props);
@@ -183,7 +182,7 @@ export default class SplashScreen extends React.Component {
 
         return (
             <View>
-                <Image source={require('C:/Users/DREPAS/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
+                <Image source={require('C:/Users/Kalyandeep/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
                     style={styles.splashcontainer}
                 />
             </View >

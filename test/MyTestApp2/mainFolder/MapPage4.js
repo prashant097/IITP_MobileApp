@@ -34,6 +34,7 @@ const initialState = {
 
     prevPos: null,
     curPos: { latitude: 17.35635, longitude: 78.42006 },
+    // const [curPos, setcurPos] = useState({latitude: 17.35635, longitude: 78.42006 }),
     // curPos: { latitude: "", longitude: "" },
     curAng: 45,
     latitudeDelta: 0.0922,
@@ -59,11 +60,13 @@ export default class MapPage4 extends Component {
     plusPrint("loc::in map page" + this.state.parsed_location+"value::"+value.latitude);
     // this.setState({curPos.latitude:value.latitude});
     // this.setState({curPos.longitude:value.longitude});
+    this.setState({curPos: {latitude:value.latitude, longitude:this.state.curPos.longitude}});
+    this.setState({curPos: {latitude:this.state.curPos.latitude, longitude:value.longitude}});
     // this.setState.curPos: { latitude: value.latitude, longitude: value.longitude },
     // this.setState.curPos.latitude=Number(value.latitude);
     // this.setState.curPos.longitude=Number(value.longitude);
-    curPos.latitude=Number(value.latitude);
-    curPos.longitude=Number(value.longitude);
+    // curPos.latitude=Number(value.latitude);
+    // curPos.longitude=Number(value.longitude);
  
   }
 
@@ -73,8 +76,8 @@ export default class MapPage4 extends Component {
   }
 
   changePosition(latOffset, lonOffset) {
-    const latitude = this.state.Number(curPos.latitude) + latOffset;
-    const longitude = this.state.Number(curPos.longitude) + lonOffset;
+    const latitude = this.state.curPos.latitude + latOffset;
+    const longitude = this.state.curPos.longitude + lonOffset;
     this.setState({
       prevPos: this.state.curPos,
       curPos: { latitude, longitude },
