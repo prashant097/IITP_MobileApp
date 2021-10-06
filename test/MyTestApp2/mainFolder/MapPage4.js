@@ -5,6 +5,10 @@ import AsyncStorage from "@react-native-community/async-storage";
 
 import MapView from 'react-native-maps';
 // import carImage from '/src/images/car.png';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 const initialState = {
     data: "",
@@ -103,6 +107,29 @@ export default class MapPage4 extends Component {
   render() {
     return (
       <View style={styles.flex}>
+      <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name=""
+          // name="Home"
+          component={HomeScreen}
+
+          options={{
+            headerTitle: "null",
+            // headerTitle: (props) => <LogoTitle {...props} />,
+            headerRight: () => (
+              <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="#00cc00"
+              />
+            ),
+          }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+
+      
         <MapView
           ref={el => (this.map = el)}
           style={styles.flex}
