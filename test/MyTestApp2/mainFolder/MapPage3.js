@@ -144,7 +144,7 @@ class MapPage extends React.Component {
                  * flipY allows tiles with inverted y coordinates (origin at bottom left of map)
                  * to be used. Its default value is false.
                  */
-                flipY={false}
+                flipY={true}
              />
             </MapView>  
 
