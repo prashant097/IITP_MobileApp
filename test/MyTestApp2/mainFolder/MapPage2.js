@@ -86,15 +86,17 @@ export default class MapPage2 extends React.Component {
       <MapView
         region={this.state.region}
         provider={null}
-		showsUserLocation={true}
-		zoomEnabled={true}
-		zoomControlEnabled={true}
-		rotateEnabled={true}
-		showsMyLocationButton={true}
-		followsUserLocation={true}
+		    showsUserLocation={true}
+        zoomEnabled={true}
+        zoomControlEnabled={true}
+        // rotateEnabled={true}
+        showsMyLocationButton={true}
+        followsUserLocation={true}
         mapType={this.mapType}
         rotateEnabled={false}
-        style={styles.map}
+        style={{ flex: 1 }}
+        // showsScale={true}
+        // style={styles.map}
 		
         showsUserLocation>
         <UrlTile

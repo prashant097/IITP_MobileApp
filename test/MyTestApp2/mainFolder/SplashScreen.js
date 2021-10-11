@@ -182,7 +182,7 @@ export default class SplashScreen extends React.Component {
 
         return (
             <View>
-                <Image source={require('C:/Users/Kalyandeep/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
+                <Image source={require('C:/Users/DREPAS/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
                     style={styles.splashcontainer}
                 />
             </View >
