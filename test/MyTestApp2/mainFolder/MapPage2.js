@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
-import { Button, Container, Header, Left, Right, Icon, Text, Radio } from 'native-base';
+import React, { Component , useState} from 'react';
+import { View, Text, StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
+// import { Button, Container, Header, Left, Right, Icon, Text, Radio } from 'native-base';
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
-import MapView, { MAP_TYPES, PROVIDER_DEFAULT, UrlTile } from 'react-native-maps';
+import MapView, { MAP_TYPES, PROVIDER_DEFAULT, UrlTile, Marker } from 'react-native-maps';
 import AsyncStorage from "@react-native-community/async-storage";
 // import styles from "./styles/styles";
 
@@ -31,6 +31,7 @@ const initialState = {
     // image2_data: null,
     footer_text: "",
     visible: true,
+    // id: Number,
 };
 
 const { width, height } = Dimensions.get('window');
@@ -40,6 +41,7 @@ const LATITUDE = 22.720555;
 const LONGITUDE = 75.858633;
 const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
+let id = 1;
 
 export default class MapPage2 extends React.Component {
   static navigationOptions = {
@@ -49,6 +51,7 @@ export default class MapPage2 extends React.Component {
   };
   constructor(props) {
     super(props);
+    // this.CustomMarker = this.CustomMarker.bind(this);
     this.state = {
       region: {
         latitude: LATITUDE,
@@ -57,8 +60,30 @@ export default class MapPage2 extends React.Component {
         longitudeDelta: LONGITUDE_DELTA,
       },
       initialState,
+      markers: {
+        coordinate: {
+          latitude: LATITUDE,
+          longitude: LONGITUDE,
+          },
+        key: id,
+        // color: randomColor(),
+      },
     };
   }
+
+  onMapPress(e) {
+    this.setState({
+       markers: 
+       {
+          coordinate: e.nativeEvent.coordinate,
+          key: id++,
+          // color: randomColor(),
+       },
+    });
+
+    // SaveAddress=()=>{console.log(JSON.stringify(this.state.markers[0].coordinate.latitude))}
+  }
+
   get mapType() {
     return this.props.provider === PROVIDER_DEFAULT ? MAP_TYPES.STANDARD : MAP_TYPES.NONE;
   }
@@ -75,9 +100,30 @@ export default class MapPage2 extends React.Component {
     this.setState({region: {latitude:this.state.region.latitude, longitude:value.longitude, latitudeDelta:this.state.region.latitudeDelta, longitudeDelta:this.state.region.longitudeDelta}});
   }
 
+  // CustomMarker = () => (
+  //   <View
+  //     style={{
+  //       paddingVertical: 10,
+  //       paddingHorizontal: 30,
+  //       backgroundColor: "#fff",
+  //       borderColor: "#eee",
+  //       borderRadius: 5,
+  //       elevation: 10
+  //     }}
+  //   >
+  //     <Text>
+  //       Lat: {this.state.markers.coordinate.latitude} 
+  //       {"\n"}
+  //       Long: {this.state.markers.coordinate.longitude} 
+  //     </Text>
+
+  //   </View>
+  // )
+
   componentDidMount() {
     // Start counting when the page is loaded\
     this.getLocation();
+    // this.CustomMarker();
   }
 
   render() {
@@ -86,7 +132,7 @@ export default class MapPage2 extends React.Component {
       <MapView
         region={this.state.region}
         provider={null}
-		    showsUserLocation={true}
+        showsUserLocation={true}
         zoomEnabled={true}
         zoomControlEnabled={true}
         // rotateEnabled={true}
@@ -94,11 +140,10 @@ export default class MapPage2 extends React.Component {
         followsUserLocation={true}
         mapType={this.mapType}
         rotateEnabled={false}
-        style={{ flex: 1 }}
-        // showsScale={true}
-        // style={styles.map}
-		
-        showsUserLocation>
+        style={styles.map,{ flex: 1 }}
+        showsUserLocation
+        onPress={e => this.onMapPress(e)}>
+
         <UrlTile
          // urlTemplate= "http://c.tile.openstreetmap.org/{z}/{x}/{y}.png"
          // urlTemplate="https://bhuvan-ras2.nrsc.gov.in/tilecache/tilecache.py/1.0.0/bhuvan_900913/{z}/{x}/{y}.png"
@@ -111,6 +156,29 @@ export default class MapPage2 extends React.Component {
           */
          flipY={true}
         />
+
+        {/* <Marker  
+          coordinate={{ latitude: this.state.region.latitude, longitude: this.state.region.longitude}} 
+          title={"Loction Details"}  
+          description={"Lat_Long"}  
+        /> */}
+        <Marker
+          key={this.state.markers.key}
+          coordinate={this.state.markers.coordinate}
+          title={"Loction Details"}  
+          description={"Lat: "+ (this.state.markers.coordinate.latitude).toString()+", Long: "+ (this.state.markers.coordinate.longitude).toString()} 
+          // pinColor={this.state.markers.color}
+         >
+          {/* <View style={styles.marker}>
+           <Text style={styles.text}> 
+           {JSON.stringify(this.state.markers.coordinate)}</Text>
+          </View> */}
+        </Marker>
+
+        {/* <Marker coordinate={this.state.markers.coordinate }>
+          <CustomMarker /> 
+        </Marker> */}
+
      </MapView>
 
     );
