@@ -51,7 +51,7 @@ export default class MapPage2 extends React.Component {
   };
   constructor(props) {
     super(props);
-    this.CustomMarker = this.CustomMarker.bind(this);
+    // this.CustomMarker = this.CustomMarker.bind(this);
     this.state = {
       region: {
         latitude: LATITUDE,
@@ -100,29 +100,30 @@ export default class MapPage2 extends React.Component {
     this.setState({region: {latitude:this.state.region.latitude, longitude:value.longitude, latitudeDelta:this.state.region.latitudeDelta, longitudeDelta:this.state.region.longitudeDelta}});
   }
 
-  CustomMarker = () => (
-    <View
-      style={{
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        backgroundColor: "#fff",
-        borderColor: "#eee",
-        borderRadius: 5,
-        elevation: 10
-      }}
-    >
-      <Text>
-        Lat: {this.state.markers.coordinate.latitude}, 
-        Long: {this.state.markers.coordinate.longitude} 
-      </Text>
+  // CustomMarker = () => (
+  //   <View
+  //     style={{
+  //       paddingVertical: 10,
+  //       paddingHorizontal: 30,
+  //       backgroundColor: "#fff",
+  //       borderColor: "#eee",
+  //       borderRadius: 5,
+  //       elevation: 10
+  //     }}
+  //   >
+  //     <Text>
+  //       Lat: {this.state.markers.coordinate.latitude} 
+  //       {"\n"}
+  //       Long: {this.state.markers.coordinate.longitude} 
+  //     </Text>
 
-    </View>
-  )
+  //   </View>
+  // )
 
   componentDidMount() {
     // Start counting when the page is loaded\
     this.getLocation();
-    this.CustomMarker();
+    // this.CustomMarker();
   }
 
   render() {
@@ -155,28 +156,28 @@ export default class MapPage2 extends React.Component {
           */
          flipY={true}
         />
+
         {/* <Marker  
           coordinate={{ latitude: this.state.region.latitude, longitude: this.state.region.longitude}} 
           title={"Loction Details"}  
           description={"Lat_Long"}  
         /> */}
-        {/* <Marker
+        <Marker
           key={this.state.markers.key}
           coordinate={this.state.markers.coordinate}
           title={"Loction Details"}  
-          description={"Lat: "+ (this.state.markers.coordinate.latitude).toString()+", Long: "+ (this.state.markers.coordinate.longitude).toString()} */}
-          {/* // pinColor={this.state.markers.color} */}
-         {/* > */}
+          description={"Lat: "+ (this.state.markers.coordinate.latitude).toString()+", Long: "+ (this.state.markers.coordinate.longitude).toString()} 
+          // pinColor={this.state.markers.color}
+         >
           {/* <View style={styles.marker}>
            <Text style={styles.text}> 
            {JSON.stringify(this.state.markers.coordinate)}</Text>
           </View> */}
-        {/* </Marker> */}
-
-        <Marker coordinate={this.state.markers.coordinate }>
-          {/* <CustomMarker /> */}
-          {/* this.CustomMarker */}
         </Marker>
+
+        {/* <Marker coordinate={this.state.markers.coordinate }>
+          <CustomMarker /> 
+        </Marker> */}
 
      </MapView>
 
