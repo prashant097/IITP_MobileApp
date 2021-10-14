@@ -148,7 +148,7 @@ export default class SplashScreen extends React.Component {
                         // const check_string =  JSON.parse(AsyncStorage.getItem("location_details"));
                         // console.log("Sent_item :: "+check_string);   
                         // this.props.navigation.navigate("MapPage");
-                        this.props.navigation.navigate("MapPage2");
+                        this.props.navigation.navigate("MapPage21");
 
                         // location_value = 
                         //   <View styles = {styles.p_container}>
@@ -182,7 +182,7 @@ export default class SplashScreen extends React.Component {
 
         return (
             <View>
-                <Image source={require('C:/Users/DREPAS/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
+                <Image source={require('C:/Users/Kalyandeep/Documents/GitHub/IITP_MobileApp/test/MyTestApp2/src/images/splash.jpg')}
                     style={styles.splashcontainer}
                 />
             </View >

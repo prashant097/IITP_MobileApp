@@ -17,7 +17,7 @@
 
    return(
     <View style={styles.container}>
-      <Image source={require('C:/Users/DREPAS/Documents/GitHub/IITP_MobileApp/test/MyTestApp1/android/app/src/images/home.png')}    
+      <Image source={require('C:/Users/Kalyandeep/Documents/GitHub/IITP_MobileApp/test/MyTestApp1/android/app/src/images/home.png')}    
       style={{
         width: 150,
         height: 150,

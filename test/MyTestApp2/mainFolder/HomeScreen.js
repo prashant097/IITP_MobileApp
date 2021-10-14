@@ -3,7 +3,7 @@ import { createStackNavigator } from "react-navigation-stack";
 
 import SplashScreen from "./SplashScreen";
 // import MapPage from "./MapPage";
-import MapPage2 from "./MapPage2";
+import MapPage21 from "./MapPage21";
 // import RTT from "./RTT";
 
 // 
@@ -17,7 +17,7 @@ const MainNavigator = createStackNavigator({
   },
 
   // MapPage: { screen: MapPage, name: "MapPage" },
-  MapPage2: { screen: MapPage2, name: "MapPage2" },
+  MapPage21: { screen: MapPage21, name: "MapPage21" },
   // RTT: {screen: RTT, name: "RTT"},
 });
 
