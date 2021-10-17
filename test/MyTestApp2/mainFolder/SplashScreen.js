@@ -148,7 +148,8 @@ export default class SplashScreen extends React.Component {
                         // const check_string =  JSON.parse(AsyncStorage.getItem("location_details"));
                         // console.log("Sent_item :: "+check_string);   
                         // this.props.navigation.navigate("MapPage");
-                        this.props.navigation.navigate("MapPage21");
+                        // this.props.navigation.navigate("MapPage21");
+                        this.props.navigation.navigate("RTT");
 
                         // location_value = 
                         //   <View styles = {styles.p_container}>
