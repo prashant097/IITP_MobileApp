@@ -10,4 +10,4 @@ import { LogBox } from 'react-native';
 // import MapPage from './mainFolder/MapPage';
 
 LogBox.ignoreAllLogs();
-AppRegistry.registerComponent(appName, () => HomeScreen);
+AppRegistry.registerComponent(appName.toLowerCase(), () => HomeScreen);

@@ -219,26 +219,26 @@ export default class MapPage21 extends React.Component {
                 />
 
                 {/* <Marker  
-          coordinate={{ latitude: this.state.region.latitude, longitude: this.state.region.longitude}} 
-          title={"Loction Details"}  
-          description={"Lat_Long"}  
-        /> */}
+                    coordinate={{ latitude: this.state.region.latitude, longitude: this.state.region.longitude}} 
+                    title={"Loction Details"}  
+                    description={"Lat_Long"}  
+                /> */}
                 <Marker
                     key={this.state.markers.key}
                     coordinate={this.state.markers.coordinate}
                     title={"Loction Details"}
                     description={"Lat: " + (this.state.markers.coordinate.latitude).toString() + "& Long: " + (this.state.markers.coordinate.longitude).toString()}
-                // pinColor={this.state.markers.color}
-                >
+                    // pinColor={this.state.markers.color}
+                    >
                     {/* <View style={styles.marker}>
-           <Text style={styles.text}> 
-           {JSON.stringify(this.state.markers.coordinate)}</Text>
-          </View> */}
+                    <Text style={styles.text}> 
+                    {JSON.stringify(this.state.markers.coordinate)}</Text>
+                    </View> */}
                 </Marker>
 
                 {/* <Marker coordinate={this.state.markers.coordinate }>
-          <CustomMarker /> 
-        </Marker> */}
+                    <CustomMarker /> 
+                    </Marker> */}
 
             </MapView>
 

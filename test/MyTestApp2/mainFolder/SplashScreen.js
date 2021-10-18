@@ -71,8 +71,10 @@ export default class SplashScreen extends React.Component {
                         || result['android.permission.ACCESS_COARSE_LOCATION']
                         || result['android.permission.READ_EXTERNAL_STORAGE']
                         || result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'never_ask_again') {
+                        plusPrint("peermission else grnated");
 
-                        this.refs.toast.show('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
+                       alert('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
+                        // this.toastRef.current.show('Please Go into Settings -> Applications -> APP_NAME -> Permissions and Allow permissions to continue');
                     }
                 });
                 return userResponse;
@@ -148,7 +150,8 @@ export default class SplashScreen extends React.Component {
                         // const check_string =  JSON.parse(AsyncStorage.getItem("location_details"));
                         // console.log("Sent_item :: "+check_string);   
                         // this.props.navigation.navigate("MapPage");
-                        this.props.navigation.navigate("MapPage21");
+                        // this.props.navigation.navigate("MapPage2");
+                        this.props.navigation.navigate("RTT");
 
                         // location_value = 
                         //   <View styles = {styles.p_container}>
