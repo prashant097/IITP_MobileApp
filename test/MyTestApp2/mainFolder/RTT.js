@@ -37,27 +37,33 @@ export default class RTT extends Component {
       // ipAddress: '192.168.42.1', // USB Tethering IP address
       // ipAddress: '27.59.136.8', // Dongle Airtel IP address
       //ipAddress: '27.59.136.145', // Dongle Airtel IP address
-      // ipAddress: '106.195.65.41', //  Airtel Nokia Phone IP address
-      ms: null
+      // ipAddress: '106.195.71.43', //  Airtel Nokia Phone IP address
+      ipAddress: '106.195.65.41', //  Airtel Nokia Phone IP address
+      ms: '',
+      // ms: null,
     };
   }
   onPressButton = async () => {
     const option = { timeout: 1000 };
-    var ips = ['106.195.65.41','27.59.136.8', '192.168.1.102','192.168.1.100'];
-    for (const item of ips) {
+    console.log("Check1");
+    // var ips = ['106.195.65.41','27.59.136.8', '192.168.1.102','192.168.1.100'];
+    // for (const item of ips) {
     try {
-      //ms = await Ping.start('106.195.65.41', option);
+      ms = await Ping.start('ipAddress', option);
+      // this.state.ms = await Ping.start('ipAddress', option);
 
-      const ms = await Ping.start(item, { timeout: 1000 });
+      // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 });
       console.log("ms :" + ms);
-      this.setState({ ms });
+      // this.setState({ ms });
     } catch (error) {
       console.log("ERROR:" + error.code, error.message);
     }
 
+    this.setState({ ms });
+
     const result = await Ping.getTrafficStats();
-    console.log("item"+item+"res::"+JSON.stringify(result));
-  }
+    console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
+  // }
     // console.log("result: "+result);
   };
 
@@ -83,7 +89,7 @@ export default class RTT extends Component {
         <TouchableOpacity onPress={this.onPressButton}>
           <Text style={styles.buttonText}>Ping</Text>
         </TouchableOpacity>
-        <Text style={styles.msText}>ms:{this.state.ms}</Text>
+        <Text style={styles.msText}>ms: {this.state.ms}</Text>
       </View>
     );
   }
