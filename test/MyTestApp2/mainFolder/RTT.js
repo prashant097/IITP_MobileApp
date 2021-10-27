@@ -33,7 +33,7 @@ export default class RTT extends Component {
   constructor(props) {
     super(props);
 
-    let imag = null;
+    // let imag = null;
 
     this.state = {
       // ipAddress: '192.168.1.102', // Nokia Mobile Hotspot IP address
@@ -55,7 +55,7 @@ export default class RTT extends Component {
     console.log("Check1");
     // var ips = ['106.195.65.41','27.59.136.8', '192.168.1.102','192.168.1.101','106.195.70.195'];
     // var ips = ['192.168.1.1','192.168.1.103','192.168.1.100'];
-    var ips = ['192.168.1.1','192.168.1.100','192.168.1.101'];
+    var ips = ['192.168.1.1','192.168.1.100','192.168.1.101','106.195.74.74'];
     for (const item of ips) {
       try {
         // const ms = await Ping.start(this.state.ipAddress, option);
@@ -77,7 +77,7 @@ export default class RTT extends Component {
 
       const result = await Ping.getTrafficStats();
       // console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
-      // console.log("item: "+item+" result::"+JSON.stringify(result));
+      console.log("item: "+item+" result::"+JSON.stringify(result));
     }
     // console.log("result: "+result);
   };
