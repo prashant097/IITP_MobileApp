@@ -36,14 +36,11 @@ export default class RTT extends Component {
     // let imag = null;
 
     this.state = {
-      // ipAddress: '192.168.1.102', // Nokia Mobile Hotspot IP address
-      // ipAddress: '192.168.1.101', // Nokia Mobile Hotspot ETHERNET IP address
-      // ipAddress: '192.168.42.1', // USB Tethering IP address
-      // ipAddress: '27.59.136.8', // Dongle Airtel IP address
-      //ipAddress: '27.59.136.145', // Dongle Airtel IP address
-      // ipAddress: '106.195.71.43', //  Airtel Nokia Phone IP address
-      // ipAddress: '106.195.65.41', //  Airtel Nokia Phone IP address
-      // ipAddress: '106.195.66.163', //  Airtel Nokia Phone IP address
+
+      ips : ['26.146.253.157','192.168.43.1'],
+      // RTT_array : new Array(),         //Not a better way to declare empty array
+      RTT_array : [],
+      Dist_array : [],
       // ms: '',
       ms: null,
       IP: null,
@@ -52,34 +49,52 @@ export default class RTT extends Component {
   }
   onPressButton = async () => {
     const option = { timeout: 1000 };
-    console.log("Check1");
-    // var ips = ['106.195.65.41','27.59.136.8', '192.168.1.102','192.168.1.101','106.195.70.195'];
-    // var ips = ['192.168.1.1','192.168.1.103','192.168.1.100'];
-    var ips = ['192.168.1.1','192.168.1.100','192.168.1.101','106.195.74.74'];
-    for (const item of ips) {
-      try {
-        // const ms = await Ping.start(this.state.ipAddress, option);
-        const ms = await Ping.start(item, option);
-        const IP = item;
-        const Dist = (speed_light * ms/(2*10^3)).toFixed(4);
-        // this.state.ms = await Ping.start('ipAddress', option);
+    console.log("New Set of DaTa:");
+    console.log("------>");
+    for (const item of this.state.ips) {
+      let ms_sum = 0;
+      let iter = 0;
+      for (let i=0; i<30; i++) {
+        try {
+          // const ms = await Ping.start(this.state.ipAddress, option);
+          const ms = await Ping.start(item, option);
+          if (ms < 10) {
+            ms_sum += ms;
+            iter +=1;
+            console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum);
+          } else {
+            console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum+" EXCLUDED!!!");
+          }
+          // this.state.ms = await Ping.start('ipAddress', option);
 
-        // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 });
-        console.log("IP: "+ item + " , RTT: " + ms + "ms, Dist: " + Dist);
-        this.setState({ ms });
-        this.setState({ IP });
-        this.setState({ Dist });
-      } catch (error) {
-        console.log("ERROR:" + error.code, error.message);
+          // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 })
+        } catch (error) {
+          console.log("ERROR:" + error.code, error.message);
+        }
+        // this.setState({ ms });
       }
+      const IP = item;
+      const RTT = (ms_sum/iter).toFixed(4);
+      const Dist = (speed_light * RTT/(2*10^3)).toFixed(4);
+      this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
+      this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
+      // this.state.RTT_array.push(RTT);
+      // this.state.Dist_array.push(Dist);
 
+      console.log("IP: "+ item + ", RTT: " + RTT + "ms, Dist: " + Dist + " & Total Iterations: "+ iter);
       // this.setState({ ms });
-
+      this.setState({ IP });
+      this.setState({ Dist });  
+      
       const result = await Ping.getTrafficStats();
       // console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
-      console.log("item: "+item+" result::"+JSON.stringify(result));
-    }
+      console.log("item: "+item+" result::"+JSON.stringify(result));      
+    }  
     // console.log("result: "+result);
+    console.log("-------> ");
+    console.log("IP: ["+this.state.ips+"]");
+    console.log("RTT_array: ["+ this.state.RTT_array +"]");
+    console.log("Dist_array ["+ this.state.Dist_array +"]");
   };
 
   async componentDidMount() {
@@ -104,9 +119,10 @@ export default class RTT extends Component {
         <TouchableOpacity onPress={this.onPressButton}>
           <Text style={styles.buttonText}>Ping</Text>
         </TouchableOpacity>
-        <Text style={styles.msText}>IP: {this.state.IP}</Text>
-        <Text style={styles.msText}>RTT: {this.state.ms} ms</Text>
-        <Text style={styles.msText}>Dist: {this.state.Dist} m </Text>
+        {/* {this.state.ips.map(item => (<li key={item}>{item}</li>))} */}
+        <Text style={styles.msText}>IP: {this.state.ips}</Text>
+        <Text style={styles.msText}>RTT: {this.state.RTT_array} </Text>
+        <Text style={styles.msText}>Dist: {this.state.Dist_array} </Text>
       </View>
     );
   }
