@@ -25,9 +25,11 @@ const styles = StyleSheet.create({
     padding: 32
   }
 });
-export default class App extends Component {
+export default class RTT extends Component {
   state = {
-    ipAddress: '114.114.114.114',
+    ipAddress: '192.168.43.1',
+    // ipAddress: '26.146.253.157',
+    // ipAddress: '100.76.143.170',
     ms: ''
   };
   onPressButton = async () => {

@@ -37,11 +37,14 @@ export default class RTT extends Component {
 
     this.state = {
 
-      ips : ['26.146.253.157','192.168.43.1'],
+      // ips : ['26.146.253.157','192.168.43.1','192.168.43.27'],
+      ips : ['192.168.43.254'],
+      // ips : ['26.44.215.119'],
+      // ips : ['157.47.74.89'],
       // RTT_array : new Array(),         //Not a better way to declare empty array
       RTT_array : [],
       Dist_array : [],
-      // ms: '',
+      // ms: '',  
       ms: null,
       IP: null,
       Dist: null,
@@ -49,47 +52,94 @@ export default class RTT extends Component {
   }
   onPressButton = async () => {
     const option = { timeout: 1000 };
+    const min = arr => arr.reduce((x, y) => Math.min(x, y));
+    const max = arr => arr.reduce((x, y) => Math.max(x, y));
     console.log("New Set of DaTa:");
     console.log("------>");
-    for (const item of this.state.ips) {
-      let ms_sum = 0;
-      let iter = 0;
-      for (let i=0; i<30; i++) {
-        try {
-          // const ms = await Ping.start(this.state.ipAddress, option);
-          const ms = await Ping.start(item, option);
-          if (ms < 10) {
-            ms_sum += ms;
-            iter +=1;
-            console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum);
-          } else {
-            console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum+" EXCLUDED!!!");
+      for (const item of this.state.ips) {
+        // let ms_sum = 0;
+        let ms_min = 1000;
+        let ms_max = 0;
+        let max_ar = Number;
+        let min_ar = Number;
+        let diff = 500;
+        let ms_array = [10];
+        let iter = 0;
+        const threshold = 18;
+        const chunk = 20; //Number of readings required in a chunk
+
+        // for (let i=0; i<30; i++) {
+        // while((diff < threshold && ms_array.length == 20)=== false) {
+        for(let i = 1; ; i++) {
+          // console.log("Check22");
+          try {
+            // const ms = await Ping.start(this.state.ipAddress, option);
+            const ms = await Ping.start(item, option);
+            iter++;
+            // max_ar = Math.max.apply(Math, ms_array);
+            // max_ar = max(ms_array);
+            ms_max = max(ms_array);
+            // min_ar = Math.min.apply(Math, ms_array);
+            // min_ar = min(ms_array);
+            ms_min = min(ms_array);
+            // console.log("max_ar, min_ar: "+max_ar+", "+min_ar);
+            // if (ms_min > min_ar) {
+            //   ms_min = min_ar;
+            // }
+            // if (ms_max < max_ar) {
+            //   ms_max = max_ar;
+            // }
+            diff = ms_max - ms_min;
+            if (ms_array.length < chunk-1) {
+              ms_array.push(ms);
+              console.log("Iteration : "+ (iter) + ", RTT :" +ms+" ms, diff: "+diff+", ms_max: "+ms_max+", ms_min: "+ms_min);
+            } else if (diff < threshold && ms_array.length == chunk-1) {
+              ms_array.push(ms);
+              console.log("Iteration : "+ (iter) + ", RTT :" +ms+" ms & SUCCESSSSS!!!");
+              break;
+            } else if (diff > threshold) {
+              ms_array.shift();
+              ms_array.push(ms);
+              console.log("Iteration : "+ (iter) + ", RTT :" +ms+" ms, diff: "+diff+", ms_max: "+ms_max+", ms_min: "+ms_min+" & (shift)");
+            }
+            // if (ms < 10) {
+            //   ms_sum += ms;
+            //   iter +=1;
+            //   console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum);
+            // } else {
+            //   console.log("Iteration : "+ (i+1) + ", RTT :" +ms+" ms, RTT_Sum = "+ms_sum+" EXCLUDED!!!");
+            // }
+            // this.state.ms = await Ping.start('ipAddress', option);
+  
+            // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 })
+          } catch (error) {
+            console.log("ERROR:" + error.code, error.message);
+            // break;
           }
-          // this.state.ms = await Ping.start('ipAddress', option);
-
-          // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 })
-        } catch (error) {
-          console.log("ERROR:" + error.code, error.message);
+          // this.setState({ ms });
         }
+        console.log("ms_array: "+ms_array);
+        console.log("Max_RTT: "+ms_max+", Min_RTT: "+ms_min+", Diff: "+diff);
+        const IP = item;
+        const ms_sum = ms_array.reduce((a, b) => a + b, 0);
+        console.log("Sum_ms_array: "+ms_sum);
+        const RTT = (ms_sum/chunk).toFixed(4);
+        const Dist = (speed_light * RTT/(2*10^3)).toFixed(4);
+        this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
+        this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
+        // this.state.RTT_array.push(RTT);
+        // this.state.Dist_array.push(Dist);
+  
+        console.log("IP: "+ item + ", RTT: " + RTT + "ms, Dist: " + Dist + " & Total Iterations: "+ iter);
         // this.setState({ ms });
-      }
-      const IP = item;
-      const RTT = (ms_sum/iter).toFixed(4);
-      const Dist = (speed_light * RTT/(2*10^3)).toFixed(4);
-      this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
-      this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
-      // this.state.RTT_array.push(RTT);
-      // this.state.Dist_array.push(Dist);
+        this.setState({ IP });
+        this.setState({ Dist });  
+        
+        const result = await Ping.getTrafficStats();
+        // console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
+        console.log("item: "+item+" result::"+JSON.stringify(result));      
+      }  
 
-      console.log("IP: "+ item + ", RTT: " + RTT + "ms, Dist: " + Dist + " & Total Iterations: "+ iter);
-      // this.setState({ ms });
-      this.setState({ IP });
-      this.setState({ Dist });  
-      
-      const result = await Ping.getTrafficStats();
-      // console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
-      console.log("item: "+item+" result::"+JSON.stringify(result));      
-    }  
     // console.log("result: "+result);
     console.log("-------> ");
     console.log("IP: ["+this.state.ips+"]");
