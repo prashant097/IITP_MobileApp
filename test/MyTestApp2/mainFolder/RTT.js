@@ -38,8 +38,9 @@ export default class RTT extends Component {
     this.state = {
 
       // ips : ['26.146.253.157','192.168.43.1','192.168.43.27'],
-      ips : ['192.168.43.254'],
-      // ips : ['26.44.215.119'],
+      // ips : ['192.168.43.254'],  //Lesslie Sir Mobile 
+      ips : ['192.168.43.1'],
+      // ips: ['114.114.114.114'],
       // ips : ['157.47.74.89'],
       // RTT_array : new Array(),         //Not a better way to declare empty array
       RTT_array : [],
@@ -65,7 +66,7 @@ export default class RTT extends Component {
         let diff = 500;
         let ms_array = [10];
         let iter = 0;
-        const threshold = 18;
+        const threshold = 8;
         const chunk = 20; //Number of readings required in a chunk
 
         // for (let i=0; i<30; i++) {
@@ -171,7 +172,7 @@ export default class RTT extends Component {
         </TouchableOpacity>
         {/* {this.state.ips.map(item => (<li key={item}>{item}</li>))} */}
         <Text style={styles.msText}>IP: {this.state.ips}</Text>
-        <Text style={styles.msText}>RTT: {this.state.RTT_array} </Text>
+        <Text style={styles.msText}>RTT: {this.state.RTT_array}</Text>
         <Text style={styles.msText}>Dist: {this.state.Dist_array} </Text>
       </View>
     );
