@@ -1,3 +1,5 @@
+// First RTT code from Github
+
 import React, { Component } from 'react';
 import {
   Platform,
@@ -25,7 +27,7 @@ const styles = StyleSheet.create({
     padding: 32
   }
 });
-export default class RTT extends Component {
+export default class RTT0 extends Component {
   state = {
     ipAddress: '192.168.43.1',
     // ipAddress: '26.146.253.157',
@@ -37,7 +39,8 @@ export default class RTT extends Component {
     let ms;
     try {
       ms = await Ping.start(this.state.ipAddress, option);
-      console.log(ms);
+      console.log("IP Address: "+this.state.ipAddress);
+      console.log("RTT:"+ms);
     } catch (error) {
       console.log(error.code, error.message);
     }
@@ -57,12 +60,12 @@ export default class RTT extends Component {
             alignSelf: 'stretch'
           }}
           onChangeText={ipAddress => this.setState({ ipAddress })}
-          value={this.state.ipAddress}
+          value={"IP Address: "+this.state.ipAddress}
         />
         <TouchableOpacity onPress={this.onPressButton}>
           <Text style={styles.buttonText}>Ping</Text>
         </TouchableOpacity>
-        <Text style={styles.msText}>ms:{this.state.ms}</Text>
+        <Text style={styles.msText}>RTT: {this.state.ms}</Text>
       </View>
     );
   }

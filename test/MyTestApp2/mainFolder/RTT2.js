@@ -1,3 +1,5 @@
+// Code to check all IP address 192.168.43.1 to 192.168.43.254
+
 import React, { Component } from 'react';
 import {
   Platform,

@@ -1,3 +1,5 @@
+// Code to check some seleted IP address
+
 import React, { Component } from 'react';
 import {
   Platform,
@@ -51,6 +53,12 @@ export default class RTT extends Component {
       Dist: null,
     };
   }
+
+  showArrayItems = async (Array) => {
+
+    return Array.map((item) => <li>{item}</li>);
+  }
+  
   onPressButton = async () => {
     const option = { timeout: 1000 };
     const min = arr => arr.reduce((x, y) => Math.min(x, y));
@@ -151,6 +159,7 @@ export default class RTT extends Component {
   async componentDidMount() {
     // Start counting when the page is loaded
     this.onPressButton();
+    // this.showArrayItems();
   }
 
   render() {
@@ -174,7 +183,9 @@ export default class RTT extends Component {
         <Text style={styles.msText}>IP: {this.state.ips}</Text>
         <Text style={styles.msText}>RTT: {this.state.RTT_array}</Text>
         <Text style={styles.msText}>Dist: {this.state.Dist_array} </Text>
+        {/* {this.showArrayItems(this.state.Dist_array)} */}
       </View>
     );
+
   }
 }
