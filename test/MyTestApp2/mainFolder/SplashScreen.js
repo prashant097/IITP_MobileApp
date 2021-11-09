@@ -151,7 +151,7 @@ export default class SplashScreen extends React.Component {
                         // console.log("Sent_item :: "+check_string);   
                         // this.props.navigation.navigate("MapPage");
                         // this.props.navigation.navigate("MapPage2");
-                        this.props.navigation.navigate("RTT");
+                        this.props.navigation.navigate("RTT3");
 
                         // location_value = 
                         //   <View styles = {styles.p_container}>
