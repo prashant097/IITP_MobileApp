@@ -56,15 +56,16 @@ export default class RTT3 extends Component {
     this.state = {
 
       tableHead:  [" ", "AP1", "AP2", "AP3"],//initialisation of header of table
-      tableTitle: ['IP','Position\n(x1,y1)', 'RTT (ms)', 'Distance(m)'], //initialisation of 1st column
+      tableTitle: ['IP Address','Position (x1,y1)', 'RTT (ms)', 'Distance (m)'], //initialisation of 1st column
       positions: ["(1,2)", "(3,4)", "(6,8)"], //cartesian coordinate of the fixed WiFi access points(APs)
       ips : ['192.168.43.1','192.168.43.2', '192.168.43.27'],
       tableData: [ [], [], [] ], //initialisation of table contents
+    //   widthArr: [100, 100, 100, 100],
 
 
       // RTT_array : new Array(),         //Not a better way to declare empty array
-      RTT_array : [],
-      Dist_array : [],
+      RTT_array : ["00", "00", "00"],
+      Dist_array : ["00", "00", "00"],
       // ms: '',  
       ms: null,
       IP: null,
@@ -72,6 +73,8 @@ export default class RTT3 extends Component {
     };
     this.state.tableData[0] = this.state.ips;
     this.state.tableData[1] = this.state.positions;
+    this.state.tableData[2] = this.state.RTT_array;
+    this.state.tableData[3] = this.state.Dist_array;//inserting updated array to the tableData
   }
 
   
@@ -175,10 +178,8 @@ export default class RTT3 extends Component {
     console.log("RTT_array: ["+ this.state.RTT_array +"]");
     console.log("Dist_array ["+ this.state.Dist_array +"]");
 
-    this.state.tableData[2] = this.state.RTT_array;
-    this.state.tableData[3] = this.state.Dist_array;//inserting updated array to the tableData
     // require('console.table');
-    console.table(this.state.tableData, ["tableData"]);
+    // console.table(this.state.tableData, ["tableData"]);
     console.log("tableData: [" +this.state.tableData+"]");
   };
 
@@ -222,10 +223,11 @@ export default class RTT3 extends Component {
         <ScrollView horizontal={true}>
         <View>   
             <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
-            <Row data={state.tableHead} flexArr={[2, 2, 2, 2]} style={styles.head} textStyle={styles.text}/>
+            {/* <Row data={state.tableHead} flexArr={[2, 2, 2, 2]} style={styles.head} textStyle={styles.text}/> */}
+            <Row data={state.tableHead} widthArr={[100, 100, 100, 100]} style={styles.head} textStyle={styles.text}/>
             <TableWrapper style={styles.wrapper}>
-                <Col data={state.tableTitle} style={styles.title} heightArr={[28,28]} textStyle={styles.text}/>
-                <Rows data={state.tableData} flexArr={[2, 2, 2]} style={styles.row} textStyle={styles.text}/>
+                <Col data={state.tableTitle} style={styles.title} heightArr={[28,28,28,28]} textStyle={styles.text}/>
+                <Rows data={state.tableData} widthArr={[100, 100, 100]} style={styles.row} textStyle={styles.text}/>
             </TableWrapper>
             </Table>
         </View>
