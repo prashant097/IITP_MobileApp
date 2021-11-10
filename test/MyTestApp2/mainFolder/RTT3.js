@@ -1,17 +1,22 @@
 // Code to check some seleted IP address
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
   Platform,
+  SafeAreaView,
+  StatusBar,
   TouchableOpacity,
   StyleSheet,
   Text,
   View,
   TextInput,
   ScrollView,
+  Button,
 } from 'react-native';
+
 import Ping from 'react-native-ping';
 import {Table, TableWrapper, Row, Rows, Col} from 'react-native-table-component';//Here we are Importing
+import CButton from "./CButton";
 // import { plusPrint } from './config';
 
 // const styles = StyleSheet.create({
@@ -36,13 +41,37 @@ const styles = StyleSheet.create({
     head: {  height: 40,  backgroundColor: '#f1f8ff'  },
     wrapper: { flexDirection: 'row' },
     title: { flex: 1, backgroundColor: '#f6f8fa' },
-    row: {  height: 28  },
+    row: {  height: 28 , backgroundColor: '#E7E6E1' },
     text: { textAlign: 'center' },
 
     buttonText: {
+        alignItems: "center",
+        backgroundColor: '#f6f8fa',
         fontSize: 24,
-        padding: 32
+        padding: 10,
+        borderWidth: 1,
+        margin: 10,
+        marginLeft: 15,
+        marginRight: 20,
+        borderRadius: 20
     },
+
+  parent: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+});
+
+const styles1 = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  parent: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
 });
 
 const speed_light = 3 * 10^8;
@@ -51,21 +80,18 @@ export default class RTT3 extends Component {
   constructor(props) {
     super(props);
 
-    // let imag = null;
-
     this.state = {
-
       tableHead:  [" ", "AP1", "AP2", "AP3"],//initialisation of header of table
-      tableTitle: ['IP Address','Position (x1,y1)', 'RTT (ms)', 'Distance (m)'], //initialisation of 1st column
+      tableTitle: ['IP Address','Position (x1,y1)', 'RTT (ms)', 'Distance (m)', 'Status'], //initialisation of 1st column
       positions: ["(1,2)", "(3,4)", "(6,8)"], //cartesian coordinate of the fixed WiFi access points(APs)
       ips : ['192.168.43.1','192.168.43.2', '192.168.43.27'],
-      tableData: [ [], [], [] ], //initialisation of table contents
-    //   widthArr: [100, 100, 100, 100],
-
+      tableData: [ [], [], [] ,[],[]], //initialisation of table contents
+      // widthArr: [100, 100, 100, 100],
 
       // RTT_array : new Array(),         //Not a better way to declare empty array
       RTT_array : ["00", "00", "00"],
       Dist_array : ["00", "00", "00"],
+      status_check: ["Waiting", "Waiting", "Waiting"],
       // ms: '',  
       ms: null,
       IP: null,
@@ -75,6 +101,11 @@ export default class RTT3 extends Component {
     this.state.tableData[1] = this.state.positions;
     this.state.tableData[2] = this.state.RTT_array;
     this.state.tableData[3] = this.state.Dist_array;//inserting updated array to the tableData
+    this.state.tableData[4] = this.state.status_check;//inserting updated array to the tableData
+  }
+
+  openAlert=()=>{
+    alert('Here, AP: Access Points.\n\nClick on "Ping" Button to update the table.\n\nAnd, three different IP Address is pinged one by one. Respective RTT and distance for each APs are updated once the "Ping" Button is clicked.');
   }
 
   
@@ -84,8 +115,14 @@ export default class RTT3 extends Component {
     const max = arr => arr.reduce((x, y) => Math.max(x, y));
     console.log("New Set of DaTa:");
     console.log("------>");
+    let count = 0;
       for (const item of this.state.ips) {
         // let ms_sum = 0;
+        let status_check = [ ...this.state.status_check ];
+        status_check[count] = "Calculating...";
+        this.setState({ status_check}); // to uopdate the status from Waiting to Calculating
+        console.log("Status_Check ["+ this.state.status_check +"]");
+
         let ms_min = 1000;
         let ms_max = 0;
         let max_ar = Number;
@@ -94,7 +131,7 @@ export default class RTT3 extends Component {
         let ms_array = [10];
         let iter = 0;
         let iter_error = 0;
-        const threshold = 80;
+        const threshold = 8;
         const chunk = 20; //Number of readings required in a chunk
 
         // for (let i=0; i<30; i++) {
@@ -144,7 +181,7 @@ export default class RTT3 extends Component {
           } catch (error) {
             console.log("ERROR:" + error.code, error.message);
             iter_error++;
-            if (iter_error == 2) {
+            if (iter_error == 3) {
                 break;
             }
           }
@@ -157,10 +194,22 @@ export default class RTT3 extends Component {
         console.log("Sum_ms_array: "+ms_sum);
         const RTT = (ms_sum/chunk).toFixed(4);
         const Dist = (speed_light * RTT/(2*10^3)).toFixed(4);
-        this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
-        this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
-        // this.state.RTT_array.push(RTT);
+        // this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
+        // this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
+        // this.state.RTT_array.push(RTT);   //Errorneous way of updating state array using push
         // this.state.Dist_array.push(Dist);
+        let RTT_array = [ ...this.state.RTT_array ];
+        RTT_array[count] = RTT;
+        this.setState({ RTT_array});
+
+        let Dist_array = [ ...this.state.Dist_array ];
+        Dist_array[count] = RTT;
+        this.setState({ Dist_array});
+
+        let status_check = [ ...this.state.status_check ];
+        status_check[count] = "Done";
+        this.setState({ status_check});
+        count++;
   
         console.log("IP: "+ item + ", RTT: " + RTT + "ms, Dist: " + Dist + " & Total Iterations: "+ iter);
         // this.setState({ ms });
@@ -177,6 +226,10 @@ export default class RTT3 extends Component {
     console.log("IP: ["+this.state.ips+"]");
     console.log("RTT_array: ["+ this.state.RTT_array +"]");
     console.log("Dist_array ["+ this.state.Dist_array +"]");
+    console.log("Status_Check ["+ this.state.status_check +"]");
+
+    // this.state.tableData[2] = this.state.RTT_array;
+    // this.state.tableData[3] = this.state.Dist_array;
 
     // require('console.table');
     // console.table(this.state.tableData, ["tableData"]);
@@ -185,13 +238,16 @@ export default class RTT3 extends Component {
 
   async componentDidMount() {
     // Start counting when the page is loaded
-    this.onPressButton();
+    // this.onPressButton();
     // this.showArrayItems();
   }
 
   render() {
-    // console.log("msg:in render:" + this.state.ms);
+    console.log("render: Click on Pinf to update the Table");
     const state = this.state;
+    this.state.tableData[2] = this.state.RTT_array;
+    this.state.tableData[3] = this.state.Dist_array;
+    this.state.tableData[4] = this.state.status_check;
 
     return (
     //   <View style={styles.container}>
@@ -216,12 +272,19 @@ export default class RTT3 extends Component {
     //   </View>
 
      <View style={styles.container}>
-        <TouchableOpacity onPress={this.onPressButton}>
-           <Text style={styles.buttonText}>Ping</Text>
-        </TouchableOpacity>
+
+        <View style={{flex:0.3, flexDirection:'row', alignItems:'flex-start',}}>     
+           <TouchableOpacity style={{width:'40%', backgroundColor:'#E7E6E1', marginHorizontal:20, borderRadius:20}} onPress={this.onPressButton}>
+              <Text style={{color:'black',alignSelf:'center', padding:15, fontSize: 20}}>Ping Start</Text>
+           </TouchableOpacity>
+           <TouchableOpacity style={{width:'40%', backgroundColor:'#E7E6E1', marginHorizontal:10, borderRadius:20}} onPress={this.openAlert}>
+               <Text style={{color:'black',alignSelf:'center', padding:15, fontSize: 20}}>Read Me</Text>
+           </TouchableOpacity>
+        </View>
+      
 
         <ScrollView horizontal={true}>
-        <View>   
+        <View style={{flex:2}}>   
             <Table borderStyle={{borderWidth: 1, borderColor: '#C1C0B9'}}>
             {/* <Row data={state.tableHead} flexArr={[2, 2, 2, 2]} style={styles.head} textStyle={styles.text}/> */}
             <Row data={state.tableHead} widthArr={[100, 100, 100, 100]} style={styles.head} textStyle={styles.text}/>
@@ -232,7 +295,7 @@ export default class RTT3 extends Component {
             </Table>
         </View>
         </ScrollView>
-     </View>
+      </View>
     );
 
   }

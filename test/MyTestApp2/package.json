@@ -29,6 +29,7 @@
     "react-native-location": "^2.5.0",
     "react-native-maps": "^0.29.3",
     "react-native-ping": "^1.2.6",
+    "react-native-popup-dialog": "^0.18.3",
     "react-native-reanimated": "^2.2.2",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "^3.7.2",
