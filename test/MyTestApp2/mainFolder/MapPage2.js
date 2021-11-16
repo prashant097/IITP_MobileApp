@@ -1,10 +1,10 @@
 import React, { Component , useState} from 'react';
-import { View, Text, StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, Image, Dimensions, BackHandler, Alert } from 'react-native';
 // import { Button, Container, Header, Left, Right, Icon, Text, Radio } from 'native-base';
 import { plusPrint, app_info, app_Name, dirHome } from "./config";
 import MapView, { MAP_TYPES, PROVIDER_DEFAULT, UrlTile, Marker } from 'react-native-maps';
 import AsyncStorage from "@react-native-community/async-storage";
-// import styles from "./styles/styles";
+import styles from "./styles/styles";
 
 const initialState = {
     data: "",
@@ -45,10 +45,15 @@ let id = 1;
 
 export default class MapPage2 extends React.Component {
   static navigationOptions = {
-    drawerLabel: 'OpenStreetMap'
-
-
+    drawerLabel: 'OpenStreetMap',
+    title: "Map_Page",
+    headerLeft: () => null,
+    gestureEnabled: false,
+    // headerTintColor: {color: 'green'},
+    headerTitleStyle: styles.header_TitleStyle,
+    headerStyle: styles.header_TextColor
   };
+
   constructor(props) {
     super(props);
     // this.CustomMarker = this.CustomMarker.bind(this);
@@ -70,6 +75,24 @@ export default class MapPage2 extends React.Component {
       },
     };
   }
+
+  handleBackButton = () => {
+    Alert.alert(
+      'Exit',
+      'Do you want to exit the application',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => plusPrint('Cancel Pressed'),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => BackHandler.exitApp() },
+      ]
+    );    
+
+    return true;
+  
+  };
 
   onMapPress(e) {
     this.setState({
@@ -123,7 +146,14 @@ export default class MapPage2 extends React.Component {
   componentDidMount() {
     // Start counting when the page is loaded\
     this.getLocation();
+    this.backHandler = BackHandler.addEventListener(
+      "hardwareBackPress", this.handleBackButton
+    );
     // this.CustomMarker();
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
   }
 
   render() {
@@ -140,7 +170,7 @@ export default class MapPage2 extends React.Component {
         followsUserLocation={true}
         mapType={this.mapType}
         rotateEnabled={false}
-        style={styles.map,{ flex: 1 }}
+        style={styles1.map,{ flex: 1 }}
         showsUserLocation
         onPress={e => this.onMapPress(e)}>
 
@@ -178,14 +208,19 @@ export default class MapPage2 extends React.Component {
         {/* <Marker coordinate={this.state.markers.coordinate }>
           <CustomMarker /> 
         </Marker> */}
+      </MapView>
 
-     </MapView>
+      // submitButton: {
+      //   position: 'absolute',
+      //   bottom:0,
+      //   left:0,
+      // };
 
     );
   }
 }
 
-const styles = StyleSheet.create({
+const styles1 = StyleSheet.create({
   map: {
     width: 358,
     height: 650,

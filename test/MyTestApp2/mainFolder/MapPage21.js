@@ -1,3 +1,5 @@
+// What's Here API integration in the Map (need resolving)
+
 import React, { Component, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar, Image, Dimensions } from 'react-native';
 // import { Button, Container, Header, Left, Right, Icon, Text, Radio } from 'native-base';

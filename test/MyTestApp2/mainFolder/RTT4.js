@@ -20,7 +20,7 @@ import {Table, TableWrapper, Row, Rows, Col} from 'react-native-table-component'
 import CButton from "./CButton";
 // import { plusPrint } from './config';
 
-// const styles = StyleSheet.create({
+// var styles = StyleSheet.create({
 //   container: {
 //     flex: 1,
 //     justifyContent: 'center',
@@ -37,7 +37,7 @@ import CButton from "./CButton";
 //   }
 // });
 
-const styles = StyleSheet.create({
+var styles = StyleSheet.create({
     container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
     head: {  height: 40,  backgroundColor: '#f1f8ff'  },
     wrapper: { flexDirection: 'row' },
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const styles1 = StyleSheet.create({
+var styles1 = StyleSheet.create({
   container: {
     flex: 1,
   },
@@ -76,14 +76,14 @@ const styles1 = StyleSheet.create({
   btn: { width: 70, height: 28, marginLeft: 15, marginRight: 15, backgroundColor: '#c8e1ff', borderRadius: 10, alignItems: "center"},
 });
 
-const speed_light = 3 * (10**8);
+var speed_light = 3 * (10**8);
 console.log("speed_light :"+speed_light );
 
 export default class RTT3 extends Component {
   constructor(props) {
     super(props);
 
-    const elementButton = (value) => (
+    var elementButton = (value) => (
       <TouchableOpacity onPress={() => this._alertIndex(value)}>
         <View style={styles1.btn}>
           <Text style={{ textAlign: 'center' }}> {value}</Text>
@@ -102,14 +102,15 @@ export default class RTT3 extends Component {
       X_Coordinate: [1,.21, 3.65, 6.4],
       // Y_Coordinate: [8, 11, 11],
       Y_Coordinate: [2.43, 3.35, 3.35],
-      ips : ['192.168.43.1','192.168.43.114', '192.168.137.1'],
+      ips : ['192.168.0.1','192.168.0.1', '192.168.0.1'],
+      // ips : ['192.168.43.1','192.168.43.1', '192.168.43.1'],
       tableData: [ [], [], [] , [], [], []], //initialisation of table contents
       // widthArr: [100, 100, 100, 100],
 
       // RTT_array : new Array(),         //Not a better way to declare empty array
       RTT_array : ["00", "00", "00"],
-      // Dist_array : ["00", "00", "00"],
-      Dist_array : ["10.2", "6.8", "4.2"],
+      Dist_array : ["00", "00", "00"],
+    //   Dist_array : ["10.2", "6.8", "4.2"],
       status_check: ["Waiting", "Waiting", "Waiting"],
       // ms: '',
       final_position: [, ],    
@@ -155,13 +156,13 @@ export default class RTT3 extends Component {
   });
   
   onPressButton = async () => {
-    const option = { timeout: 1000 };
-    const min = arr => arr.reduce((x, y) => Math.min(x, y));
-    const max = arr => arr.reduce((x, y) => Math.max(x, y));
+    var option = { timeout: 1000 };
+    var min = arr => arr.reduce((x, y) => Math.min(x, y));
+    var max = arr => arr.reduce((x, y) => Math.max(x, y));
     console.log("New Set of DaTa:");
     console.log("------>");
     let count = 0;
-      for (const item of this.state.ips) {
+      for (var item of this.state.ips) {
 
         // let Status = await this._deviceStatus();
         await this.AsyncAlert();
@@ -180,16 +181,16 @@ export default class RTT3 extends Component {
         let ms_array = [10];
         let iter = 0;
         let iter_error = 0;
-        const threshold = 5;
-        const chunk = 20; //Number of readings required in a chunk
+        var threshold = 5;
+        var chunk = 30; //Number of readings required in a chunk
 
         // for (let i=0; i<30; i++) {
         // while((diff < threshold && ms_array.length == 20)=== false) {
         for(let i = 1; ; i++) {
           // console.log("Check22");
           try {
-            // const ms = await Ping.start(this.state.ipAddress, option);
-            const ms = await Ping.start(item, option);
+            // var ms = await Ping.start(this.state.ipAddress, option);
+            var ms = await Ping.start(item, option);
             iter++;
             // max_ar = Math.max.apply(Math, ms_array);
             // max_ar = max(ms_array);
@@ -226,7 +227,7 @@ export default class RTT3 extends Component {
             // }
             // this.state.ms = await Ping.start('ipAddress', option);
   
-            // const ms = await Ping.start(this.state.ipAddress, { timeout: 1000 })
+            // var ms = await Ping.start(this.state.ipAddress, { timeout: 1000 })
           } catch (error) {
             console.log("ERROR:" + error.code, error.message);
             iter_error++;
@@ -238,15 +239,15 @@ export default class RTT3 extends Component {
         }
         console.log("ms_array: "+ms_array);
         console.log("Max_RTT: "+ms_max+", Min_RTT: "+ms_min+", Diff: "+diff);
-        const IP = item;
-        const ms_sum = ms_array.reduce((a, b) => a + b, 0);
+        var IP = item;
+        var ms_sum = ms_array.reduce((a, b) => a + b, 0);
         console.log("Sum_ms_array: "+ms_sum);
-        const RTT = (ms_sum/chunk).toFixed(4);
-        // const RTT = (ms_sum/chunk);
+        var RTT = (ms_sum/chunk).toFixed(4);
+        // var RTT = (ms_sum/chunk);
         console.log("speed_light :"+speed_light );
-        console.log("RTT, RTT/(2*10^3): "+RTT+", "+RTT/(2*10**9));
-        const Dist = (speed_light * (RTT/(2*10**9))).toFixed(4);
-        // const Dist = (speed_light * (RTT/(2*10**9)));
+        console.log("RTT, RTT/(2*10^9): "+RTT+", "+RTT/(2*10**9));
+        var Dist = (speed_light * (RTT/(2*10**9))).toFixed(4);
+        // var Dist = (speed_light * (RTT/(2*10**9)));
         console.log("Distance: "+Dist);
         // this.setState({ RTT_array: [...this.state.RTT_array, RTT] })
         // this.setState({ Dist_array: [...this.state.Dist_array, Dist] })
@@ -270,7 +271,7 @@ export default class RTT3 extends Component {
         this.setState({ IP });
         this.setState({ Dist });  
         
-        const result = await Ping.getTrafficStats();
+        var result = await Ping.getTrafficStats();
         // console.log("ipAddress: "+this.state.ipAddress+" result::"+JSON.stringify(result));
         console.log("item: "+item+" result::"+JSON.stringify(result));      
       }
@@ -327,8 +328,8 @@ export default class RTT3 extends Component {
       circle_int2.point_1.x, circle_int2.point_1.y, circle_int2.point_2.x, circle_int2.point_2.y,);
 
     console.log("final_position_update: "+JSON.stringify(final_position_update));
-    const x_update = final_position_update.x;
-    const y_update = final_position_update.y;
+    var x_update = final_position_update.x;
+    var y_update = final_position_update.y;
     let final_position = [ ...this.state.final_position ];
     final_position = [x_update.toFixed(3), y_update.toFixed(3)];
     // final_position = [x_update, y_update];
@@ -354,7 +355,7 @@ export default class RTT3 extends Component {
  */
  intersection_circle(c1, c2) {
   // Start constructing the response object.
-  const result = {
+  var result = {
       intersect_count: 0,
       intersect_occurs: true,
       one_is_in_other: false,
@@ -364,11 +365,11 @@ export default class RTT3 extends Component {
   };
 
   // Get vertical and horizontal distances between circles.
-  const dx = c2.x - c1.x;
-  const dy = c2.y - c1.y;
+  var dx = c2.x - c1.x;
+  var dy = c2.y - c1.y;
 
   // Calculate the distance between the circle centers as a straight line.
-  const dist = Math.hypot(dy, dx);
+  var dist = Math.hypot(dy, dx);
 
   // Check if circles intersect.
   if (dist > c1.r + c2.r) {
@@ -391,18 +392,18 @@ export default class RTT3 extends Component {
   if (result.intersect_occurs) {
       // Centroid is the pt where two lines cross. A line between the circle centers
       // and a line between the intersection points.
-      const centroid = (c1.r * c1.r - c2.r * c2.r + dist * dist) / (2.0 * dist);
+      var centroid = (c1.r * c1.r - c2.r * c2.r + dist * dist) / (2.0 * dist);
 
       // Get the coordinates of centroid.
-      const x2 = c1.x + (dx * centroid) / dist;
-      const y2 = c1.y + (dy * centroid) / dist;
+      var x2 = c1.x + (dx * centroid) / dist;
+      var y2 = c1.y + (dy * centroid) / dist;
 
       // Get the distance from centroid to the intersection points.
-      const h = Math.sqrt(c1.r * c1.r - centroid * centroid);
+      var h = Math.sqrt(c1.r * c1.r - centroid * centroid);
 
       // Get the x and y dist of the intersection points from centroid.
-      const rx = -dy * (h / dist);
-      const ry = dx * (h / dist);
+      var rx = -dy * (h / dist);
+      var ry = dx * (h / dist);
 
       // Get the intersection points.
       result.point_1.x = Number((x2 + rx).toFixed(15));
@@ -481,7 +482,7 @@ intersect_line(x1, y1, x2, y2, x3, y3, x4, y4) {
 
   render() {
     console.log("render: Click on Ping to update the Table");
-    const state = this.state;
+    var state = this.state;
     this.state.tableData[3] = this.state.RTT_array;
     this.state.tableData[4] = this.state.Dist_array;
     this.state.tableData[5] = this.state.status_check; 

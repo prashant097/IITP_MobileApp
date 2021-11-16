@@ -53,14 +53,12 @@ export default class SplashScreen extends React.Component {
                     PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
                     PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
                     PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
                 ]).then((result) => {
 
                     if (result['android.permission.ACCESS_FINE_LOCATION']
                         && result['android.permission.CAMERA']
-                        && result['android.permission.ACCESS_FINE_LOCATION']
                         && result['android.permission.ACCESS_COARSE_LOCATION']
-
                         && result['android.permission.READ_EXTERNAL_STORAGE']
                         && result['android.permission.WRITE_EXTERNAL_STORAGE'] === 'granted') {
 
@@ -151,7 +149,7 @@ export default class SplashScreen extends React.Component {
                         // console.log("Sent_item :: "+check_string);   
                         // this.props.navigation.navigate("MapPage");
                         // this.props.navigation.navigate("MapPage2");
-                        this.props.navigation.navigate("RTT3");
+                        this.props.navigation.navigate("RTT4");
 
                         // location_value = 
                         //   <View styles = {styles.p_container}>

@@ -1,10 +1,12 @@
+// replacing const as var
+
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
 import SplashScreen from "./SplashScreen";
 // import MapPage from "./MapPage";
 // import MapPage2 from "./MapPage2";
-import RTT3 from "./RTT3";
+import RTT4 from "./RTT4";
 
 // 
 const MainNavigator = createStackNavigator({
@@ -17,8 +19,8 @@ const MainNavigator = createStackNavigator({
   },
 
   // MapPage: { screen: MapPage, name: "MapPage" },
-  // MapPage21: { screen: MapPage2, name: "MapPage2" },
-  RTT3: {screen: RTT3, name: "RTT3"},
+  // MapPage2: { screen: MapPage2, name: "MapPage2" },
+  RTT4: {screen: RTT4, name: "RTT4"},
 });
 
 const App = createAppContainer(MainNavigator);
